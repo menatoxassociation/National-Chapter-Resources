@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resuscitation of the Poisoned Patient — Clinical Toxicology in Saudi Arabia</title>
+<meta name="description" content="Chapter 3: Resuscitation of the critically poisoned patient — an interactive clinical chapter with weight-linked antidote dosing, shock pathways, and rhythm tools.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F3EF;
+  --paper-2:#E5EAE3;
+  --card:#FFFFFF;
+  --ink:#0F2A24;
+  --ink-soft:#47584F;
+  --drape:#17453C;
+  --drape-2:#2C6355;
+  --artery:#9E1B2F;
+  --artery-soft:#FBEDEE;
+  --amber:#B07C04;
+  --amber-soft:#FBF2DC;
+  --ice:#2A6484;
+  --ice-soft:#E9F1F5;
+  --line:#CBD4C9;
+  --line-soft:#E0E6DE;
+  --radius:3px;
+  --sans:'Archivo',system-ui,-apple-system,sans-serif;
+  --serif:'Spectral',Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:18px;line-height:1.7;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3,h4,.ui{font-family:var(--sans)}
+p{margin:0 0 1.1em}
+a{color:var(--drape-2)}
+strong{font-weight:600}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.col{max-width:66ch}
+main{display:block}
+.layout{display:block}
+@media(min-width:1080px){
+  .layout{display:grid;grid-template-columns:212px minmax(0,1fr);gap:52px;align-items:start}
+}
+
+/* ---------- patient bar ---------- */
+#patientbar{
+  position:sticky;top:0;z-index:60;background:var(--drape);color:#EAF2EE;
+  border-bottom:2px solid #0B2A23;
+}
+#patientbar .inner{
+  max-width:1180px;margin:0 auto;padding:9px 20px;
+  display:flex;gap:16px;align-items:center;flex-wrap:wrap;
+  font-family:var(--sans);font-size:14px;
+}
+#patientbar .pb-label{opacity:.72;letter-spacing:.01em}
+#patientbar input[type=number]{
+  width:76px;padding:6px 8px;border:1px solid #4B8476;background:#0C332B;color:#fff;
+  font-family:var(--sans);font-size:15px;font-variant-numeric:tabular-nums;border-radius:var(--radius);
+}
+.seg{display:inline-flex;border:1px solid #4B8476;border-radius:var(--radius);overflow:hidden}
+.seg button{
+  background:transparent;color:#CFE3DB;border:0;padding:6px 11px;font-family:var(--sans);
+  font-size:13px;cursor:pointer;
+}
+.seg button[aria-pressed=true]{background:#EAF2EE;color:var(--drape);font-weight:600}
+.pb-note{margin-left:auto;opacity:.7;font-size:12.5px;max-width:340px}
+#patientbar .pb-warn{background:#FBF2DC;color:#5A4302;border-radius:2px;padding:4px 9px;font-size:12.5px;font-weight:600;flex-basis:100%}
+#patientbar .pb-link{background:none;border:0;border-bottom:1px dotted #9CC7B8;color:#CFE3DB;font-family:var(--sans);font-size:12.5px;padding:0;cursor:pointer}
+#patientbar .pb-link:hover{color:#fff}
+#agePanel{background:#0C332B;color:#CADED6;border-radius:2px;padding:10px 12px;font-size:12.5px;line-height:1.5;flex-basis:100%;margin-top:2px}
+#agePanel strong{color:#fff}
+@media(min-width:900px){#patientbar .pb-warn{flex-basis:auto}}
+
+/* ---------- hero ---------- */
+.hero{background:var(--drape);color:#F0F5F2;padding:56px 0 0;position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:2}
+.kicker{font-family:var(--sans);font-size:13.5px;letter-spacing:.06em;color:#8FBFB0;margin:0 0 18px}
+.hero h1{
+  font-size:clamp(34px,6.4vw,66px);line-height:1.02;margin:0 0 20px;font-weight:700;
+  letter-spacing:-.02em;max-width:15ch;
+}
+.hero .stand{font-size:clamp(17px,2.4vw,21px);max-width:52ch;color:#CADED6;margin:0 0 26px}
+.byline{font-family:var(--sans);font-size:14px;color:#9CC7B8;border-top:1px solid #2F6355;padding-top:16px;margin-bottom:8px}
+.trace{display:block;width:100%;height:76px;margin-top:6px}
+.trace path{fill:none;stroke:#5FA893;stroke-width:1.6;vector-effect:non-scaling-stroke}
+.trace .lead{stroke:#E8F3EE;stroke-width:2.1}
+
+/* ---------- rail ---------- */
+.rail{display:none}
+@media(min-width:1080px){
+  .rail{display:block;position:sticky;top:96px;padding-top:44px;font-family:var(--sans)}
+  .rail ol{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+  .rail li a{
+    display:block;padding:7px 0 7px 14px;margin-left:-1px;border-left:2px solid transparent;
+    color:var(--ink-soft);text-decoration:none;font-size:13.5px;line-height:1.35;
+  }
+  .rail li a:hover{color:var(--ink)}
+  .rail li a[aria-current=true]{border-left-color:var(--artery);color:var(--ink);font-weight:600}
+}
+.chipbar{
+  display:flex;gap:8px;overflow-x:auto;padding:12px 20px;background:var(--paper-2);
+  border-bottom:1px solid var(--line);position:sticky;top:43px;z-index:50;-webkit-overflow-scrolling:touch;
+}
+.chipbar a{
+  flex:0 0 auto;font-family:var(--sans);font-size:13px;text-decoration:none;color:var(--ink-soft);
+  border:1px solid var(--line);background:#fff;padding:5px 11px;border-radius:14px;white-space:nowrap;
+}
+@media(min-width:1080px){.chipbar{display:none}}
+
+/* ---------- sections ---------- */
+section{padding:52px 0 8px;scroll-margin-top:110px}
+section > .col > h2, h2.sec{
+  font-size:clamp(25px,3.6vw,36px);line-height:1.14;margin:0 0 6px;font-weight:700;letter-spacing:-.015em;
+}
+.sec-index{font-family:var(--sans);font-size:13px;color:var(--artery);font-weight:600;margin:0 0 10px}
+h3{font-size:21px;margin:34px 0 8px;font-weight:600;line-height:1.25}
+h4{font-size:16.5px;margin:20px 0 6px;font-weight:600}
+.lede{font-size:20px;color:var(--ink-soft)}
+hr.rule{border:0;border-top:1px solid var(--line);margin:44px 0 0}
+
+/* ---------- generic blocks ---------- */
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px;margin:26px 0;font-family:var(--sans);font-size:15px;line-height:1.55;
+}
+.panel h3,.panel h4{font-family:var(--sans);margin-top:0}
+.panel p{font-size:15px}
+.tool{border-top:3px solid var(--drape)}
+.flag{
+  border-left:3px solid var(--artery);background:var(--artery-soft);border-radius:0 var(--radius) var(--radius) 0;
+  padding:16px 18px;margin:22px 0;font-family:var(--sans);font-size:15px;line-height:1.55;
+}
+.flag h4{margin:0 0 6px;color:var(--artery)}
+.note{
+  border-left:3px solid var(--amber);background:var(--amber-soft);padding:16px 18px;margin:22px 0;
+  font-family:var(--sans);font-size:15px;line-height:1.55;border-radius:0 var(--radius) var(--radius) 0;
+}
+.note h4{margin:0 0 6px;color:var(--amber)}
+.cool{
+  border-left:3px solid var(--ice);background:var(--ice-soft);padding:16px 18px;margin:22px 0;
+  font-family:var(--sans);font-size:15px;line-height:1.55;border-radius:0 var(--radius) var(--radius) 0;
+}
+.cool h4{margin:0 0 6px;color:var(--ice)}
+ul.tight,ol.tight{margin:8px 0 14px;padding-left:20px}
+ul.tight li,ol.tight li{margin-bottom:6px}
+.panel ul,.flag ul,.note ul,.cool ul{margin:8px 0 0;padding-left:19px}
+.panel li,.flag li,.note li,.cool li{margin-bottom:5px}
+
+/* ---------- controls ---------- */
+label.fld{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin-bottom:5px}
+select,input[type=text],input[type=number].box{
+  font-family:var(--sans);font-size:15px;padding:9px 10px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:var(--radius);width:100%;
+}
+.grid2{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+.grid3{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:720px){.grid3{grid-template-columns:repeat(3,1fr)}}
+button.act{
+  font-family:var(--sans);font-size:14px;font-weight:600;padding:10px 16px;border-radius:var(--radius);
+  border:1px solid var(--drape);background:var(--drape);color:#fff;cursor:pointer;
+}
+button.act:hover{background:var(--drape-2)}
+button.ghost{
+  font-family:var(--sans);font-size:14px;padding:9px 14px;border-radius:var(--radius);
+  border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;
+}
+button.ghost[aria-pressed=true]{background:var(--drape);color:#fff;border-color:var(--drape)}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+input[type=range]{width:100%;accent-color:var(--artery)}
+
+/* ---------- output ---------- */
+.out{
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;margin-top:16px;font-family:var(--sans);font-size:15px;line-height:1.55;
+}
+.out.empty{color:var(--ink-soft);font-style:normal}
+.dose{font-variant-numeric:tabular-nums;font-weight:600}
+.big{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.15}
+.unit{font-size:14px;font-weight:500;color:var(--ink-soft)}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid var(--line-soft)}
+.kv:last-child{border-bottom:0}
+.kv .k{color:var(--ink-soft)}
+.kv .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line-soft)}
+.step:last-child{border-bottom:0}
+.step .n{
+  flex:0 0 24px;height:24px;border-radius:50%;background:var(--drape);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;margin-top:1px;
+}
+.step.stop .n{background:var(--artery)}
+.step .b{flex:1}
+.step .t{font-weight:600}
+.step .d{color:var(--ink-soft);font-size:14px}
+
+/* ---------- tables ---------- */
+.tblwrap{overflow-x:auto;margin:22px 0;border:1px solid var(--line);border-radius:var(--radius);background:#fff}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:14px;min-width:560px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{background:var(--paper-2);font-weight:600;font-size:13px;color:var(--ink)}
+tbody tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{
+  display:inline-block;font-family:var(--sans);font-size:11.5px;font-weight:600;
+  padding:2px 7px;border-radius:2px;border:1px solid;white-space:nowrap;
+}
+.tag.red{color:var(--artery);border-color:#E3B9BF;background:var(--artery-soft)}
+.tag.amb{color:var(--amber);border-color:#E7D3A0;background:var(--amber-soft)}
+.tag.grn{color:var(--drape);border-color:#B6D2C8;background:#E9F2EE}
+.tag.blu{color:var(--ice);border-color:#B8D2DF;background:var(--ice-soft)}
+.cor{display:inline-block;font-family:var(--sans);font-size:11.5px;font-weight:700;padding:3px 8px;
+  border-radius:2px;white-space:nowrap;min-width:66px;text-align:center}
+.cor.c1{background:#1C6B4A;color:#fff}
+.cor.c2a{background:#4F9A6E;color:#fff}
+.cor.c2b{background:#D6A72B;color:#2A2405}
+.cor.c3n{background:#7C8A83;color:#fff}
+.cor.c3h{background:var(--artery);color:#fff}
+.rec{display:flex;gap:13px;padding:11px 0;border-bottom:1px solid var(--line-soft);align-items:flex-start}
+.rec:last-child{border-bottom:0}
+.rec .rb{flex:0 0 auto;padding-top:1px}
+.rec .rt{flex:1}
+.rec .loe{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+.legend{display:grid;gap:9px;grid-template-columns:1fr;margin-top:12px}
+@media(min-width:640px){.legend{grid-template-columns:1fr 1fr}}
+.legend div{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+
+/* ---------- quiz ---------- */
+.q{border:1px solid var(--line);background:#fff;border-radius:var(--radius);padding:20px;margin:18px 0}
+.q .stem{font-family:var(--serif);font-size:17px;margin-bottom:14px}
+.q button.opt{
+  display:block;width:100%;text-align:left;font-family:var(--sans);font-size:14.5px;
+  padding:11px 13px;margin-bottom:8px;border:1px solid var(--line);background:#fff;
+  border-radius:var(--radius);cursor:pointer;line-height:1.45;
+}
+.q button.opt:hover{border-color:var(--drape-2)}
+.q button.opt.right{border-color:var(--drape);background:#E9F2EE;font-weight:600}
+.q button.opt.wrong{border-color:var(--artery);background:var(--artery-soft)}
+.q .exp{display:none;font-family:var(--sans);font-size:14.5px;line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.q .exp.show{display:block}
+
+/* ---------- misc ---------- */
+.refs{font-size:15px;line-height:1.6}
+.refs li{margin-bottom:10px}
+footer{background:var(--drape);color:#CADED6;margin-top:60px;padding:38px 0;font-family:var(--sans);font-size:14px}
+footer strong{color:#fff}
+.mini{font-size:13px;color:var(--ink-soft);font-family:var(--sans)}
+.qrsbox{background:#0C2B24;border-radius:var(--radius);padding:14px 10px 6px;margin-top:14px}
+.qrsbox svg{display:block;width:100%;height:120px}
+.qrsbox path{fill:none;stroke:#7FD3B8;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.qrsbox .grid{stroke:#1C4A3F;stroke-width:1}
+.qrs-legend{font-family:var(--sans);font-size:12.5px;color:#8FBFB0;padding:4px 4px 2px;display:flex;justify-content:space-between}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+@media print{
+  #patientbar,.chipbar,.rail{display:none}
+  body{background:#fff;font-size:12pt}
+  .hero{background:#fff;color:#000}
+}
+</style>
+</head>
+<body>
+
+<div id="patientbar">
+  <div class="inner">
+    <span class="pb-label">Patient weight</span>
+    <input type="number" id="wt" value="70" min="1" max="250" step="1" aria-label="Patient weight in kilograms"> <span class="pb-label">kg</span>
+    <span class="seg" role="group" aria-label="Patient type">
+      <button type="button" id="mAdult" aria-pressed="true">Adult</button>
+      <button type="button" id="mPaed" aria-pressed="false">Child</button>
+    </span>
+    <span class="pb-note">Every dose recalculates from this weight. Where a source specifies an adult maximum, the paediatric dose is capped at it. <button type="button" id="ageHelp" class="pb-link">Which patients count as children?</button></span>
+    <span class="pb-warn" id="wtWarn" hidden></span>
+    <div id="agePanel" hidden>
+      <strong>The definition is not the same for basic and advanced life support.</strong> In the BLS setting a child is anyone <em>without signs of puberty</em>; in the ALS setting a child is anyone <em>under 18 years</em>. A 14-year-old with signs of puberty is treated as an adult for BLS and as a child for ALS. For the weight-based antidote dosing on this page, use the ALS definition — under 18 — and note that the paediatric dose never exceeds the adult dose, so in a large adolescent the two converge.
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Clinical Toxicology in Saudi Arabia &nbsp;&middot;&nbsp; Chapter 3</p>
+    <h1>Resuscitation of the poisoned patient</h1>
+    <p class="stand">Most poisoned patients who die are killed by a physiological derangement you can hold off — not by a molecule you cannot remove. Resuscitation buys the time that metabolism needs.</p>
+    <p class="byline">Musa Suliman Alfaifi &nbsp;&middot;&nbsp; Clinical Toxicologist</p>
+  </div>
+  <svg class="trace" viewBox="0 0 1200 76" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0,50 L120,50 L128,48 L136,52 L150,50 L165,50 L172,20 L182,68 L190,50 L240,50 L252,42 L266,50 L360,50 L368,48 L376,52 L390,50 L405,50 L412,20 L422,68 L430,50 L480,50 L492,42 L506,50 L600,50"/>
+    <path class="lead" d="M600,50 L620,50 L634,46 L650,54 L668,50 L700,50 L714,26 L738,74 L760,44 L790,52 L820,50 L846,38 L876,54 L900,50 L940,50 L958,28 L984,72 L1006,46 L1040,52 L1080,50 L1200,50"/>
+  </svg>
+</header>
+
+<nav class="chipbar" aria-label="Chapter sections">
+  <a href="#orient">Why it's different</a>
+  <a href="#first">First five minutes</a>
+  <a href="#airway">Airway &amp; breathing</a>
+  <a href="#shock">Shock</a>
+  <a href="#rhythm">Rhythm</a>
+  <a href="#arrest">Cardiac arrest</a>
+  <a href="#brain">Brain &amp; temperature</a>
+  <a href="#remove">Removing the poison</a>
+  <a href="#cellular">Cyanide &amp; methaemoglobin</a>
+  <a href="#guideline">Evidence strength</a>
+  <a href="#formulary">Antidote formulary</a>
+  <a href="#cases">Cases</a>
+</nav>
+
+<div class="wrap layout">
+  <nav class="rail" aria-label="Chapter contents">
+    <ol>
+      <li><a href="#orient">Why poisoned resuscitation is different</a></li>
+      <li><a href="#first">The first five minutes</a></li>
+      <li><a href="#airway">Airway and breathing</a></li>
+      <li><a href="#shock">Shock and haemodynamic support</a></li>
+      <li><a href="#rhythm">Rhythm disturbance</a></li>
+      <li><a href="#arrest">Cardiac arrest and ECMO</a></li>
+      <li><a href="#brain">Brain, agitation, temperature</a></li>
+      <li><a href="#remove">Removing the poison</a></li>
+      <li><a href="#cellular">Cyanide and methaemoglobinaemia</a></li>
+      <li><a href="#guideline">Evidence strength</a></li>
+      <li><a href="#formulary">Antidote formulary</a></li>
+      <li><a href="#readiness">Local readiness</a></li>
+      <li><a href="#cases">Cases</a></li>
+      <li><a href="#refs">References</a></li>
+    </ol>
+  </nav>
+
+<main>
+
+<section id="orient">
+  <div class="col">
+    <p class="sec-index">1</p>
+    <h2 class="sec">Why poisoned resuscitation is different</h2>
+    <p class="lede">Standard advanced life support is the floor, not the ceiling. Four features of poisoning change what you do and, more importantly, how long you keep doing it.</p>
+
+    <p><strong>The injury is reversible.</strong> A myocardium stunned by verapamil is not an infarcted myocardium. In the absence of established anoxic organ injury, the natural course of overdose is recovery once the poison is cleared by the liver, the kidney, or an extracorporeal circuit. <a href="#r1">The 2023 AHA focused update</a> makes this argument explicitly when it discusses venoarterial ECMO: the poisoned patient can be an ideal candidate for temporary mechanical support precisely because there is something to recover to.</p>
+
+    <p><strong>Physiological reserve is often preserved, though not always.</strong> Critical poisoning occurs across every age group, and a substantial share of patients — particularly in chronic cardiac glycoside toxicity, in therapeutic-error overdoses, and in deliberate self-poisoning later in life — carry significant comorbidity. What matters is not an assumption about age but an assessment of reserve: where the myocardium and the brain were sound before the exposure, the ceiling on insulin, calcium and vasopressor dosing is set by the poison rather than by the patient. Where they were not, the same aggression carries more risk and the case for early mechanical support may come sooner.</p>
+
+    <p><strong>Treatment precedes diagnosis.</strong> You will stabilise most of these patients before you know the agent. History is often absent, unreliable, or deliberately false; confirmatory assays return in hours to days. Resuscitation therefore runs on physiology and toxidrome, not on a name.</p>
+
+    <p><strong>The endpoints move.</strong> Ordinary resuscitation targets are calibrated to ordinary disease. In poisoning the target may be a QRS duration rather than a blood pressure, a urine pH rather than a serum bicarbonate, the disappearance of bronchorrhoea rather than a heart rate. Knowing which number you are titrating to is most of the skill.</p>
+
+    <div class="flag">
+      <h4>The one habit to unlearn</h4>
+      <p>Early termination of resuscitation. In poisoning, prolonged CPR, repeated antidote dosing, and extracorporeal support have produced neurologically intact survivors after arrest durations that would be futile in cardiac disease. Decide to stop on the basis of the poison's expected duration of effect, not the clock alone.</p>
+    </div>
+
+    <p>This chapter is built around the sequence you actually perform: secure gas exchange, support the circulation, control the brain and the temperature, remove what can be removed, and give the antidote that the physiology demands. Enter a weight in the bar at the top of the page and every dose below is calculated for your patient.</p>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="first">
+  <div class="col">
+    <p class="sec-index">2</p>
+    <h2 class="sec">The first five minutes</h2>
+    <p class="lede">Six bedside data points identify almost every immediately lethal poisoning: level of consciousness, respiratory adequacy, blood pressure, QRS duration, capillary glucose, and core temperature.</p>
+
+    <p>Four of the six are available before any laboratory result. Get a 12-lead electrocardiogram and a glucose on every undifferentiated overdose — both change management within minutes, and both are routinely delayed while a drug screen that will not change anything is chased.</p>
+
+    <div class="panel tool" id="toxidrome-tool">
+      <h3>Toxidrome finder</h3>
+      <p class="mini">Select what you can see and feel at the bedside. The tool ranks the syndromes that fit and states the resuscitation consequence of each.</p>
+      <div class="grid3" style="margin-top:14px">
+        <div><label class="fld" for="tdPupil">Pupils</label>
+          <select id="tdPupil">
+            <option value="">Not assessed</option>
+            <option value="small">Constricted</option>
+            <option value="mid">Mid-position</option>
+            <option value="large">Dilated</option>
+          </select></div>
+        <div><label class="fld" for="tdSkin">Skin</label>
+          <select id="tdSkin">
+            <option value="">Not assessed</option>
+            <option value="dry">Dry, flushed, hot</option>
+            <option value="sweat">Sweaty</option>
+            <option value="normal">Normal</option>
+          </select></div>
+        <div><label class="fld" for="tdMent">Mental state</label>
+          <select id="tdMent">
+            <option value="">Not assessed</option>
+            <option value="depressed">Sedated or comatose</option>
+            <option value="agitated">Agitated or delirious</option>
+            <option value="clear">Alert</option>
+          </select></div>
+        <div><label class="fld" for="tdHr">Heart rate</label>
+          <select id="tdHr">
+            <option value="">Not assessed</option>
+            <option value="brady">Bradycardic</option>
+            <option value="normal">Normal</option>
+            <option value="tachy">Tachycardic</option>
+          </select></div>
+        <div><label class="fld" for="tdRr">Breathing</label>
+          <select id="tdRr">
+            <option value="">Not assessed</option>
+            <option value="slow">Slow or shallow</option>
+            <option value="normal">Normal</option>
+            <option value="fast">Rapid or deep</option>
+          </select></div>
+        <div><label class="fld" for="tdOther">Additional sign</label>
+          <select id="tdOther">
+            <option value="">None</option>
+            <option value="secretions">Wet: salivation, bronchorrhoea, vomiting, diarrhoea</option>
+            <option value="clonus">Clonus or hyperreflexia, worse in the legs</option>
+            <option value="rigid">Lead-pipe rigidity</option>
+            <option value="fasc">Fasciculations or weakness</option>
+            <option value="retention">Urinary retention, absent bowel sounds</option>
+          </select></div>
+      </div>
+      <div class="out empty" id="tdOut">Choose at least two findings.</div>
+    </div>
+
+    <div class="note">
+      <h4>The electrocardiogram is a toxicology assay</h4>
+      <ul>
+        <li><strong>QRS &gt; 100 ms</strong> in an undifferentiated overdose should raise strong concern for cardiac sodium-channel blockade — tricyclics, cocaine, flecainide, propranolol in large doses, quinine, carbamazepine, diphenhydramine, chloroquine, bupropion. It is not diagnostic. Ventricular tachycardia, hyperkalaemia and other electrolyte disturbance, pre-existing bundle branch block, and paced rhythms all widen the QRS, and some drugs widen it by other mechanisms — bupropion-associated widening, for instance, is thought to involve impaired gap-junction conduction rather than classic sodium-channel blockade. Compare with an old electrocardiogram whenever one exists.</li>
+        <li><strong>A tall terminal R wave in aVR</strong> points to the same mechanism when the QRS is only borderline.</li>
+        <li><strong>Prolonged QT with a normal QRS</strong> suggests potassium-channel blockade — citalopram, methadone, antipsychotics, arsenic, many antiemetics.</li>
+        <li><strong>Bradycardia with a normal QRS</strong> in a hypotensive patient narrows rapidly to beta-blocker, calcium channel blocker, digoxin, clonidine, or cholinergic poisoning — four of which have specific antidotes.</li>
+      </ul>
+    </div>
+
+    <div class="flag">
+      <h4>Give glucose before you interpret anything</h4>
+      <p>Hypoglycaemia mimics every neurological presentation in toxicology and is produced by sulfonylureas, insulin, quinine, salicylate in children, and alcohol in the malnourished. A capillary glucose costs seconds; a missed one costs a brain.</p>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="airway">
+  <div class="col">
+    <p class="sec-index">3</p>
+    <h2 class="sec">Airway and breathing</h2>
+    <p class="lede">Intubation in poisoning is rarely about the airway anatomy and almost always about the trajectory. The two errors are intubating a patient who only needed positioning and time, and intubating a patient whose own respiratory effort was the thing keeping them alive.</p>
+
+    <h3>Deciding to intubate</h3>
+    <p>Depressed consciousness alone is a weak indication. A patient with an isolated sedative-hypnotic overdose who is ventilating and oxygenating adequately, handling their own secretions, at low risk of vomiting, and on a predictable downhill-then-uphill course can often be managed with airway positioning, oxygen, suction, and continuous observation. Judge that on ventilation, oxygenation, secretion handling, aspiration risk, trajectory, and what procedures the patient needs — not on the gag reflex, which is absent in a substantial minority of normal adults and does not predict who will aspirate. Against that, intubate early and without deliberation when any of the following is present.</p>
+
+    <div class="panel tool" id="airway-tool">
+      <h3>Airway decision aid</h3>
+      <p class="mini">Tick everything that applies. This does not replace your assessment of the airway itself.</p>
+      <div id="awChecks" style="margin-top:12px"></div>
+      <div class="out empty" id="awOut">Select any findings that apply.</div>
+    </div>
+
+    <h3>Choosing induction drugs</h3>
+    <p>The poisoned patient is frequently hypotensive, acidaemic, and hypovolaemic before you start. Reduce the induction dose, have a vasopressor drawn up and running rather than sitting on the trolley, and correct the acidaemia you can correct before the apnoeic period rather than after it.</p>
+
+    <div class="tblwrap">
+      <table>
+        <caption class="mini" style="text-align:left;padding:10px 12px">Agent-specific cautions at induction</caption>
+        <thead><tr><th>Situation</th><th>Concern</th><th>Practical approach</th></tr></thead>
+        <tbody>
+          <tr><td>Organophosphate or carbamate poisoning</td><td>Butyrylcholinesterase is inhibited, so suxamethonium and mivacurium metabolism is markedly prolonged — paralysis may last hours. Neither agent is recommended in this setting</td><td>Use a neuromuscular blocker that is not primarily metabolised by cholinesterase. Early endotracheal intubation is itself recommended in life-threatening organophosphate poisoning, with observational data suggesting better outcomes</td></tr>
+          <tr><td>Salicylate poisoning</td><td>Loss of the patient's own compensatory hyperventilation collapses the pH and drives salicylate into the brain</td><td>See the box below — avoid intubation if at all possible</td></tr>
+          <tr><td>Sodium-channel blockade with wide QRS</td><td>Apnoea and the resulting acidaemia worsen channel binding</td><td>Alkalinise before induction, minimise apnoea time, ventilate to the pre-intubation minute volume or higher</td></tr>
+          <tr><td>Sympathomimetic or anticholinergic hyperthermia</td><td>Paralysis stops heat production from muscle activity but also masks seizures</td><td>Paralyse if needed for cooling, but give adequate sedation and monitor for non-convulsive seizure</td></tr>
+          <tr><td>Hyperkalaemia from any cause</td><td>Suxamethonium raises serum potassium further</td><td>Non-depolarising agent; treat the potassium</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flag">
+      <h4>The salicylate ventilation trap</h4>
+      <p>A patient with severe salicylate poisoning maintains a respiratory alkalosis with a very high minute volume. That alkalaemia is what keeps salicylate ionised in plasma and out of the central nervous system. Sedation, paralysis, and a ventilator set to conventional tidal volumes and rates all reduce minute ventilation below what the patient was generating. The pH falls, salicylate redistributes into the brain and heart, and arrest can follow within minutes of a technically flawless intubation.</p>
+      <ul>
+        <li>Treat severe salicylate toxicity with <strong>urgent haemodialysis</strong>, not with intubation, wherever dialysis can be obtained.</li>
+        <li>If intubation is unavoidable: give sodium bicarbonate before induction, use apnoeic oxygenation, keep the apnoeic period as short as possible, and match or exceed the patient's spontaneous minute ventilation immediately.</li>
+        <li>Have the dialysis circuit being prepared in parallel, not sequentially.</li>
+      </ul>
+    </div>
+
+    <h3>Ventilating after intubation</h3>
+    <p>Two poisoned groups need deliberately abnormal ventilator settings. In <strong>salicylate</strong> poisoning, match or exceed the patient's own pre-intubation minute ventilation and treat to an explicit pH target — commonly around 7.45 to 7.55, or whatever figure your local toxicology protocol specifies — with serial arterial blood gases rather than a single check. A vague instruction to keep the pH "at the alkalaemic end of normal" is how patients end up under-ventilated. In <strong>sodium-channel blockade</strong>, the same principle applies for the same reason: acidaemia increases drug binding to the channel. In everyone else, conventional lung-protective settings apply.</p>
+
+    <p>Respiratory failure in poisoning is not always central. Consider aspiration, which is common and frequently the reason a simple sedative overdose becomes an intensive-care admission; non-cardiogenic pulmonary oedema from opioids, salicylates, and inhaled irritants; and the ascending weakness of organophosphate poisoning, in which the patient can look adequately atropinised while nicotinic paralysis progresses toward the diaphragm.</p>
+
+    <div class="cool">
+      <h4>Pulse oximetry and capnography can lie</h4>
+      <p>In <strong>methaemoglobinaemia</strong> the pulse oximeter drifts toward the low-to-mid eighties and stays there regardless of the oxygen delivered, while the arterial oxygen tension is normal because the problem is haemoglobin's ability to carry oxygen, not the lung's ability to transfer it. The saturation reported on a routine blood gas is usually <em>calculated</em> from the oxygen tension and will therefore look normal; only <strong>direct co-oximetry</strong> measures the methaemoglobin fraction. In <strong>carbon monoxide</strong> poisoning the standard pulse oximeter cannot reliably distinguish carboxyhaemoglobin from oxyhaemoglobin and may look falsely reassuring — co-oximetry is required whenever it is suspected. In <strong>cyanide</strong> poisoning, impaired cellular oxygen extraction may raise the venous oxygen saturation toward the arterial value, but that finding is neither sensitive nor specific enough to diagnose or exclude cyanide, and treatment should never wait for it. Ask for co-oximetry whenever the clinical picture and the number disagree.</p>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="shock">
+  <div class="col">
+    <p class="sec-index">4</p>
+    <h2 class="sec">Shock and haemodynamic support</h2>
+    <p class="lede">Ask one question before you reach for a drug: is this pump failure, vasodilatation, rate failure, or hypovolaemia? Toxins produce all four, often simultaneously, and the wrong choice makes the patient worse.</p>
+
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>Mechanism</th><th>Typical agents</th><th>Bedside clues</th><th>First moves</th></tr></thead>
+        <tbody>
+          <tr><td>Cardiogenic — direct myocardial depression</td><td>Calcium channel blockers, beta-blockers, tricyclics, class I antidysrhythmics</td><td>Narrow pulse pressure, cool peripheries, poor contractility on echo</td><td>High-dose insulin, inotrope, treat sodium-channel blockade if present</td></tr>
+          <tr><td>Vasodilatory</td><td>Dihydropyridines, alpha-blockers, clonidine, sedatives, antipsychotics</td><td>Warm peripheries, wide pulse pressure, preserved contractility</td><td>Fluid, noradrenaline, then vasopressin or methylene blue if refractory</td></tr>
+          <tr><td>Rate failure</td><td>Beta-blockers, non-dihydropyridines, digoxin, cholinergics, clonidine</td><td>Bradycardia with hypotension</td><td>Atropine, antidote for the class, pacing if required</td></tr>
+          <tr><td>Hypovolaemic or distributive loss</td><td>Cholinergics, iron, colchicine, arsenic, any prolonged vomiting or diarrhoea</td><td>Dry, tachycardic, high lactate, third-space losses</td><td>Small boluses of about 10 mL/kg, reassessed after each, guided by perfusion and bedside echocardiography</td></tr>
+          <tr><td>Dysrhythmic</td><td>Digoxin, sodium-channel blockers, QT-prolonging agents</td><td>Abnormal rhythm on the monitor</td><td>Treat the rhythm; see the next section</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Bedside echocardiography earns its place here.</strong> A depressed, poorly contracting ventricle in a hypotensive overdose points to insulin and inotropy; a hyperdynamic, empty ventricle points to volume and vasoconstriction. Repeating it after each intervention is the cheapest titration tool you have.</p>
+
+    <h3>Choosing the vasoactive drug</h3>
+    <p>There is no high-quality comparative trial of vasopressors in poisoning. In practice, <strong>noradrenaline</strong> is the reasonable default for undifferentiated toxic shock, with <strong>adrenaline</strong> preferred when inotropy is needed alongside vasoconstriction. Add vasopressin for catecholamine-refractory vasoplegia. What distinguishes toxicology from general critical care is the dose: competitive blockade at the receptor means the requirement may be several times the usual ceiling, and the absence of an arbitrary maximum is the point.</p>
+
+    <div class="panel tool" id="shock-router">
+      <h3>Shock pathway</h3>
+      <p class="mini">Choose the suspected class. Doses are calculated for the weight in the bar at the top of the page and follow the antidote table of the 2023 AHA focused update.</p>
+      <div style="margin-top:14px">
+        <label class="fld" for="shClass">Suspected poisoning</label>
+        <select id="shClass">
+          <option value="">Select</option>
+          <option value="ccb">Calcium channel blocker</option>
+          <option value="bb">Beta-blocker</option>
+          <option value="na">Sodium-channel blocker (tricyclic, flecainide, cocaine)</option>
+          <option value="dig">Digoxin or cardiac glycoside</option>
+          <option value="last">Local anaesthetic systemic toxicity</option>
+          <option value="sympath">Sympathomimetic</option>
+          <option value="opioid">Opioid</option>
+          <option value="unknown">Unknown agent, refractory shock</option>
+        </select>
+      </div>
+      <div class="out empty" id="shOut">Select a class to see the escalation sequence with calculated doses.</div>
+    </div>
+
+    <h3>High-dose insulin</h3>
+    <p>High-dose insulin euglycaemic therapy is the single most important advance in the management of calcium-channel-blocker and beta-blocker poisoning. The poisoned myocardium shifts from fatty-acid to carbohydrate metabolism at exactly the moment when calcium-channel blockade is suppressing insulin release from the pancreas and inducing peripheral insulin resistance. Supraphysiological insulin restores myocardial glucose uptake and has a direct inotropic effect independent of adrenergic receptors — which is why it works when catecholamines have failed.</p>
+
+    <p>The indication is not identical for the two classes, and the difference is worth holding onto. For <strong>calcium-channel-blocker</strong> poisoning, high-dose insulin is recommended for hypotension. For <strong>beta-blocker</strong> poisoning, it is recommended for hypotension that is refractory to, or given in conjunction with, vasopressor therapy. In practice both are given early in a deteriorating patient, but the beta-blocker recommendation is anchored to vasopressor failure in a way the calcium-channel-blocker one is not.</p>
+    <p>The dosing is the same: a bolus of 1 unit/kg followed by an infusion of 1 to 10 units/kg per hour, with treatment directed at avoiding hypoglycaemia, severe hypokalaemia, and severe volume overload. The commonest error is not giving too much insulin; it is stopping at an infusion rate that would be considered enormous in diabetes but is trivial here, and abandoning it before the onset of effect.</p>
+
+    <div class="panel tool" id="hiet-tool">
+      <h3>High-dose insulin calculator</h3>
+      <div class="grid2" style="margin-top:14px">
+        <div><label class="fld" for="hietRate">Infusion rate (units/kg per hour)</label>
+          <input type="range" id="hietRate" min="1" max="10" step="0.5" value="1">
+          <div class="mini" id="hietRateLbl">1 unit/kg per hour</div>
+        </div>
+        <div><label class="fld" for="hietGlu">Current capillary glucose (mmol/L)</label>
+          <input type="number" class="box" id="hietGlu" min="0" max="40" step="0.1" placeholder="e.g. 6.5">
+        </div>
+      </div>
+      <div class="out" id="hietOut"></div>
+    </div>
+
+    <div class="note">
+      <h4>Running high-dose insulin safely</h4>
+      <ul>
+        <li><strong>Use regular (soluble) human insulin.</strong> Draw the bolus and start the infusion together; do not wait for a glucose result to begin.</li>
+        <li><strong>Glucose:</strong> check every 15–30 minutes until the rate is stable, then hourly. Most patients need a concentrated dextrose infusion; give it centrally when the concentration demands it. A patient who is hyperglycaemic at the outset may need no dextrose initially — but will need it later.</li>
+        <li><strong>Potassium:</strong> insulin drives potassium intracellularly. Check at baseline and at least every one to two hours. Replace to keep potassium in the low-normal range rather than chasing a normal number, since total body potassium is unchanged.</li>
+        <li><strong>Onset is not immediate</strong> — expect improvement over roughly 15 to 60 minutes. Titrate upwards rather than declaring failure.</li>
+        <li><strong>Volume:</strong> the dextrose carrier accumulates. Use the most concentrated solution your access allows and watch for pulmonary oedema.</li>
+        <li><strong>Weaning:</strong> continue while the poison is still present. Glucose requirements can persist for hours after the insulin is stopped, so keep monitoring.</li>
+      </ul>
+    </div>
+
+    <h3>Calcium, glucagon, and methylene blue</h3>
+    <p>These three occupy a second tier: supported by limited data, reasonable to use, and unlikely to be sufficient alone in a crashing patient.</p>
+
+    <div class="panel tool" id="adj-tool">
+      <h3>Adjunct dose calculator</h3>
+      <div class="btnrow" role="group" aria-label="Adjunct">
+        <button type="button" class="ghost" data-adj="cacl" aria-pressed="false">Calcium chloride</button>
+        <button type="button" class="ghost" data-adj="cagl" aria-pressed="false">Calcium gluconate</button>
+        <button type="button" class="ghost" data-adj="gluc" aria-pressed="false">Glucagon</button>
+        <button type="button" class="ghost" data-adj="mb" aria-pressed="false">Methylene blue</button>
+        <button type="button" class="ghost" data-adj="ile" aria-pressed="false">Lipid emulsion</button>
+      </div>
+      <div class="out empty" id="adjOut">Choose an adjunct.</div>
+    </div>
+
+    <div class="flag">
+      <h4>Lipid emulsion is not a general rescue drug</h4>
+      <p>Lipid emulsion has one strong indication and several much weaker ones, and the distinction matters at the bedside.</p>
+      <ul>
+        <li><strong>Local anaesthetic systemic toxicity.</strong> Recommended, and genuinely first-line alongside airway control and correction of acidaemia. This is the only indication where the evidence is strong.</li>
+        <li><strong>Sodium-channel-blocker poisoning.</strong> May be reasonable for life-threatening toxicity refractory to other treatment. The lipid emulsion workgroup positions it as a last-resort therapy in tricyclic poisoning, explicitly not as first-line.</li>
+        <li><strong>Calcium channel blockers and beta-blockers — Class 2b, usefulness uncertain.</strong> This is an upgrade in 2025: the previous edition called lipid emulsion not recommended for calcium-channel-blocker poisoning and not likely to be beneficial in beta-blocker poisoning. "Uncertain" is not an endorsement — a large retrospective study found no benefit, lipid can increase gastrointestinal absorption of a drug still in the gut, and cases of abrupt collapse after administration are reported. It is never a substitute for high-dose insulin and never precedes it.</li>
+      </ul>
+      <p style="margin-top:10px"><strong>Dosing is now split at 70 kg.</strong> At or under 70 kg, 1.5 mL/kg then 0.25 mL/kg per minute for up to 30 minutes. Above 70 kg, the guideline abandons weight-based calculation entirely: a fixed 100 mL bolus over 2–3 minutes, then 200–250 mL over 15–20 minutes. All studies use 20% emulsion. If your departmental protocol still says 1.5 mL/kg for everybody, it is out of date.</p>
+      <p style="margin-top:10px">Lipid interferes with laboratory assays, can clog the filters of an extracorporeal circuit, may increase gastrointestinal absorption of a lipophilic drug still in the gut, and has been associated with pancreatitis and with sudden cardiovascular collapse immediately after administration.</p>
+    </div>
+
+    <div class="cool">
+      <h4>Refractory vasoplegia</h4>
+      <p>When noradrenaline, vasopressin, and volume have not restored perfusion in a vasodilated poisoned patient, methylene blue at 1–2 mg/kg — repeated hourly if needed, with a maintenance infusion of 1 mg/kg per hour and a cumulative ceiling of about 5–7 mg/kg — has been used. Be clear about the strength of that claim: the guideline rates its usefulness for refractory vasodilatory shock from calcium-channel-blocker poisoning as <strong>uncertain</strong> (Class 2b), on the basis of case reports in which responses were mixed and sometimes transient. Its Class 1 indication is methaemoglobinaemia. Avoid or use with great caution in glucose-6-phosphate dehydrogenase deficiency and in serotonergic poisoning, where methylene blue's monoamine oxidase inhibition can precipitate serotonin toxicity. Hydroxocobalamin has also been used for vasoplegia refractory to other measures.</p>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="rhythm">
+  <div class="col">
+    <p class="sec-index">5</p>
+    <h2 class="sec">Rhythm disturbance</h2>
+    <p class="lede">Antidysrhythmic reflexes learned in cardiology are frequently wrong in toxicology, because the drug you would reach for often shares a mechanism with the poison you are treating.</p>
+
+    <h3>The wide complex</h3>
+    <p>A wide QRS in a poisoned patient should prompt you to treat for cardiac sodium-channel blockade, but it is not proof of it: ventricular tachycardia, hyperkalaemia, and pre-existing conduction disease produce the same tracing, and treating one does not exclude the others. Hypertonic sodium bicarbonate is the guideline-recommended therapy, and it is thought to act through two mechanisms at once — a sodium load that increases the electrochemical gradient across the channel, and alkalaemia that reduces the fraction of drug bound to it. Both physiological goals are achieved by the same drug, which is the rationale for preferring it; direct clinical evidence that it is superior to an equivalent sodium load given as hypertonic saline is not available, and its precise mechanism and optimal endpoints remain debated. What is not in doubt is that allowing the patient to become acidaemic — through hypoventilation, seizure, or under-resuscitated shock — works against the treatment.</p>
+
+    <div class="panel tool" id="qrs-tool">
+      <h3>Wide-QRS tool</h3>
+      <p class="mini">Enter the QRS duration from the 12-lead electrocardiogram.</p>
+      <div style="margin-top:14px">
+        <label class="fld" for="qrsVal">QRS duration (ms)</label>
+        <input type="range" id="qrsVal" min="70" max="220" step="2" value="90">
+        <div class="qrsbox">
+          <svg id="qrsSvg" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"></svg>
+          <div class="qrs-legend"><span id="qrsLbl">90 ms</span><span>lead II, schematic</span></div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button type="button" class="act" id="qrsBicarb">Show response to sodium bicarbonate</button>
+        <button type="button" class="ghost" id="qrsReset">Reset</button>
+      </div>
+      <div class="out" id="qrsOut"></div>
+    </div>
+
+    <div class="note">
+      <h4>What not to give for a poisoned wide complex</h4>
+      <ul>
+        <li><strong>Class Ia and Ic agents</strong> (procainamide, flecainide) share the poison's mechanism and will widen the QRS further.</li>
+        <li><strong>Amiodarone</strong> has sodium- and potassium-channel effects and negative inotropy; it is not the drug of choice here, and the AHA instead identifies lidocaine — a class Ib agent that competes for the same channel with fast off-kinetics — as a reasonable alternative or adjunct to bicarbonate.</li>
+        <li><strong>Beta-adrenergic antagonists</strong> in cocaine-induced coronary vasospasm or hypertensive emergency — explicitly not recommended in 2025 (Class 3, No Benefit). Treat the cause with sedation and cooling. Note the guideline still lists calcium channel blockers among the reasonable vasodilators for cocaine-induced vasospasm.</li>
+        <li><strong>Physostigmine</strong> in an undifferentiated wide-complex overdose — it is a reasonable treatment for pure antimuscarinic delirium with a normal QRS, but in tricyclic poisoning it has been associated with asystole.</li>
+      </ul>
+    </div>
+
+    <h3>Bradycardia</h3>
+    <p>Atropine is worth trying and is usually insufficient in serious beta-blocker or calcium-channel-blocker poisoning, because the block is at a receptor or channel that atropine does not touch. Use standard advanced life support dosing here — 1 mg every 3–5 minutes to a maximum of 3 mg in an adult, 0.02 mg/kg to a maximum single dose of 0.5 mg in a child — and keep it mentally separate from the very much larger, doubling doses used in cholinergic poisoning. Escalate quickly to the class-specific therapy: calcium and high-dose insulin for calcium channel blockers, glucagon and high-dose insulin for beta-blockers, digoxin-specific antibody fragments for cardiac glycosides, and atropine in escalating doses for cholinergic poisoning. Electrical pacing may capture, but capture without an effective mechanical output is not a success — watch the pulse and the pressure, not the monitor.</p>
+
+    <div class="flag">
+      <h4>Cardiac glycoside poisoning</h4>
+      <p>Digoxin-specific immune antibody fragments reverse life-threatening dysrhythmia, hyperkalaemia, and bradycardia, and should be given on clinical grounds rather than waiting for a concentration. Reported response rates are 50% to 90%, with resolution of dysrhythmia within 30 to 45 minutes in most cases. The historical teaching that calcium causes fatal "stone heart" in digoxin toxicity is not supported by the available human data, but hyperkalaemia in cardiac glycoside poisoning is a marker of poisoning severity that is best treated by giving the antibody rather than by driving potassium intracellularly. Extracorporeal removal does not work — the volume of distribution is too large.</p>
+      <p style="margin-top:10px"><strong>Note what has been withdrawn.</strong> The 2025 section on cardiac glycosides contains only two recommendations — the antibody for digoxin and digitoxin, and the antibody for Bufo toad and yellow oleander. The previous entries for atropine, electrical pacing, lidocaine, phenytoin, bretylium and extracorporeal removal are all gone. Atropine and pacing remain standard advanced life support for bradycardia and did not need a poisoning-specific recommendation; digoxin is not dialysable; bretylium is no longer manufactured. Use standard measures, and do not let them delay the antibody.</p>
+    </div>
+
+    <h3>Volatile hydrocarbons: sudden sniffing death</h3>
+    <p>Cardiac arrest after volatile hydrocarbon use has been called sudden sniffing death since Bass described the syndrome in 1970, and it is new to the guidelines in 2025. The mechanism is not settled, but in vitro and animal work suggests hydrocarbons sensitise cardiac potassium, sodium and calcium channels. Hypoxia, a catecholamine surge, and — with fluorinated hydrocarbons — hypocalcaemia may all contribute. In the original large series, sudden death frequently followed exertion or a frightening moment, which tells you where the catecholamines came from.</p>
+
+    <div class="flag">
+      <h4>Think hard before the adrenaline</h4>
+      <p>In a Queensland series of 22 patients aged thirteen and over with out-of-hospital arrest after volatile substance use, <strong>none of the eight who received adrenaline survived, while five of the six who did not receive it survived with good neurological outcome</strong>. That is a small, uncontrolled series and it does not overturn advanced life support on its own — but in a poisoning whose mechanism is catecholamine sensitisation, it is a signal pointing the opposite way to your reflex.</p>
+      <p style="margin-top:10px">The guideline's single recommendation here is that a <strong>beta-adrenergic antagonist may be reasonable for ventricular arrhythmia refractory to standard therapy</strong> (Class 2b, expert opinion), on the logic that it reduces myocardial sensitivity to catecholamines. The supporting cases are mixed: one patient in pulseless ventricular tachycardia after difluoroethane inhalation survived after amiodarone, defibrillation, calcium, dexmedetomidine, esmolol and cardiac bypass; another, after inhaling difluoroethane-containing keyboard cleaner, died of refractory cardiogenic shock despite amiodarone, lidocaine and metoprolol.</p>
+      <p style="margin-top:10px">If you are resuscitating a young patient found with a solvent, an aerosol or a can of keyboard cleaner, this is a conversation to have with the toxicologist while the resuscitation is running.</p>
+    </div>
+
+    <h3>Torsades and the long QT</h3>
+    <p>Magnesium sulfate is first-line and does not require a low magnesium concentration to be given. Correct potassium to the upper half of the normal range. If torsades recurs, increase the heart rate — isoprenaline infusion or overdrive pacing — to shorten the QT interval. Avoid amiodarone and other agents that prolong repolarisation.</p>
+
+    <div class="cool">
+      <h4>Defibrillation still works</h4>
+      <p>Ventricular fibrillation in poisoning is treated with standard-energy defibrillation. The difference is persistence: refractory fibrillation in a young poisoned patient is an indication to continue, to correct the underlying channel blockade and acidaemia, and to consider extracorporeal support, rather than to escalate through antidysrhythmics that may be counterproductive.</p>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="arrest">
+  <div class="col">
+    <p class="sec-index">6</p>
+    <h2 class="sec">Cardiac arrest and extracorporeal support</h2>
+    <p class="lede">Standard high-quality cardiopulmonary resuscitation remains the foundation. What changes is the reversible cause you are treating, and how long you are prepared to treat it.</p>
+
+    <p>The AHA is explicit that for almost every critical poisoning, the evidence is stronger for the pre-arrest state — refractory hypotension, refractory dysrhythmia — than for arrest itself. The practical implication is to treat aggressively before arrest occurs. Once arrest has happened, most antidotes remain unproven, but several retain a clear rationale.</p>
+
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>Antidote in cardiac arrest</th><th>Position</th></tr></thead>
+        <tbody>
+          <tr><td>Sodium bicarbonate</td><td><span class="tag grn">Give</span> Standard advanced life support plus bicarbonate is appropriate for life-threatening dysrhythmia from cocaine or other sodium-channel blockers</td></tr>
+          <tr><td>Digoxin-specific antibody fragments</td><td><span class="tag grn">Give</span> Empirical high-dose therapy when cardiac glycoside poisoning is suspected</td></tr>
+          <tr><td>Hydroxocobalamin</td><td><span class="tag grn">Give</span> Treat suspected cyanide immediately; do not wait for confirmation. Sodium nitrite is the alternative, with sodium thiosulfate added</td></tr>
+          <tr><td>Lipid emulsion</td><td><span class="tag amb">Consider</span> Local anaesthetic toxicity above all; other lipophilic poisons only after other therapies have failed</td></tr>
+          <tr><td>High-dose insulin, calcium, glucagon</td><td><span class="tag amb">Consider</span> Rationale persists in calcium-channel-blocker and beta-blocker arrest; evidence is pre-arrest</td></tr>
+          <tr><td>Naloxone or nalmefene</td><td><span class="tag amb">Consider</span> May be reasonable in cardiac arrest with suspected opioid overdose (Class 2b), <em>provided it does not interfere with high-quality compression-ventilation CPR</em>. Observational data are mixed and it cannot work without cardiac output. Never delay standard resuscitation or the emergency call to give it or to await its effect</td></tr>
+          <tr><td>Flumazenil</td><td><span class="tag red">Do not give</span> No role in cardiac arrest from benzodiazepine poisoning, and harmful in patients at risk of seizure or dysrhythmia</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Venoarterial ECMO</h3>
+    <p>Extracorporeal membrane oxygenation does for the poisoned heart what dialysis does for the poisoned kidney: it substitutes for the failing organ until the drug is gone. The AHA considers it reasonable for life-threatening shock refractory to pharmacological treatment in beta-blocker and calcium-channel-blocker poisoning, and it is a recognised option in refractory local anaesthetic and sympathomimetic cardiogenic shock. Its limits are honest ones — availability, transport logistics, comorbidity, and the real risks of cannulation and anticoagulation. It does not correct distributive shock and it does not reverse cellular poisoning such as cyanide or metformin-associated lactic acidosis.</p>
+
+    <div class="panel">
+      <h4>When to make the ECMO call</h4>
+      <p>Make it early and make it before arrest. The decision is a multidisciplinary one and benefits from toxicology input, because the question is not only "is this patient sick enough" but "how long will this poison last".</p>
+      <ul>
+        <li>Cardiogenic shock from a cardiotoxic agent, unresponsive to high-dose insulin, calcium or glucagon, and escalating vasoactive support</li>
+        <li>Refractory ventricular dysrhythmia or recurrent arrest from a sodium-channel blocker</li>
+        <li>A young patient without significant comorbidity and without established anoxic brain injury</li>
+        <li>A poison with a finite, estimable duration of effect, or one that can be cleared by dialysis while on the circuit</li>
+        <li>Poor candidates: distributive shock alone, mitochondrial poisons, established multi-organ anoxic injury</li>
+      </ul>
+    </div>
+
+    <div class="flag">
+      <h4>How long to continue</h4>
+      <p>There is no defensible fixed duration. Continue while there is a reversible mechanism, a treatable rhythm, or a plausible route to extracorporeal support. Published survivors of prolonged toxicological arrest are the reason this chapter exists. Involve a toxicologist in the decision to stop.</p>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="brain">
+  <div class="col">
+    <p class="sec-index">7</p>
+    <h2 class="sec">Brain, agitation, and temperature</h2>
+    <p class="lede">Seizure, agitation, and hyperthermia are not three problems. They are one metabolic problem that kills through rhabdomyolysis, lactic acidosis, and disseminated coagulopathy, and the treatment for all three begins with sedation.</p>
+
+    <h3>Seizures</h3>
+    <p>Benzodiazepines are first-line for essentially every toxic seizure, and the doses required are often larger and more rapidly repeated than in epilepsy. If seizures continue, move to a barbiturate or propofol. <strong>Phenytoin has no established role in toxic seizures</strong> and is specifically to be avoided in theophylline poisoning and in sodium-channel-blocker poisoning, where it shares the poison's mechanism.</p>
+
+    <p>Three toxic seizures do not respond to escalating sedation alone:</p>
+
+    <div class="panel tool" id="seiz-tool">
+      <h3>Refractory toxic seizure</h3>
+      <div class="btnrow" role="group" aria-label="Cause">
+        <button type="button" class="ghost" data-seiz="inh" aria-pressed="false">Isoniazid</button>
+        <button type="button" class="ghost" data-seiz="hypo" aria-pressed="false">Hypoglycaemia</button>
+        <button type="button" class="ghost" data-seiz="na" aria-pressed="false">Sodium-channel blocker</button>
+        <button type="button" class="ghost" data-seiz="withd" aria-pressed="false">Withdrawal</button>
+        <button type="button" class="ghost" data-seiz="gen" aria-pressed="false">General ladder</button>
+      </div>
+      <div class="out empty" id="seizOut">Choose a cause.</div>
+    </div>
+
+    <h3>Agitation and delirium</h3>
+    <p>Benzodiazepines are the mainstay, titrated to a calm patient who is breathing. Physical restraint without adequate sedation is dangerous — the AHA states plainly that prolonged physical restraint without sedation is potentially harmful, because isometric struggle against restraint generates heat, lactate, and myoglobin. Antipsychotics lower the seizure threshold, prolong the QT, and impair heat dissipation; they are a poor choice as a primary agent in toxic agitation. Ketamine and dexmedetomidine are used as adjuncts when benzodiazepine requirements become extreme.</p>
+
+    <div class="flag">
+      <h4>Hyperthermia is the emergency within the emergency</h4>
+      <p>A core temperature above roughly 40&nbsp;°C from sympathomimetic or cocaine poisoning, serotonin toxicity, neuroleptic malignant syndrome, salicylates, or antimuscarinic poisoning is immediately life-threatening, and the <em>rate</em> of cooling — not merely the fact of cooling — determines the outcome.</p>
+      <ul>
+        <li><strong>Ice water immersion, 1–5&nbsp;°C, is the method of choice.</strong> A systematic review of 63 studies found it faster than the alternatives, and it is preferred over other methods.</li>
+        <li><strong>If ice water is unavailable</strong>, tepid water immersion at 8–17&nbsp;°C or tarp-assisted ice water cooling is preferred over cooling blankets, cold packs and endovascular devices.</li>
+        <li><strong>Cool at least 0.15&nbsp;°C per minute.</strong> That is the explicit target — design your method around achieving it, and start cooling concurrently with resuscitation rather than after it.</li>
+        <li><strong>Stop active cooling at 38.6&nbsp;°C</strong>, not at normothermia, to avoid overshooting into hypothermia.</li>
+        <li><strong>Sedate deeply.</strong> Muscle activity is the heat source, so sedation is a cooling intervention.</li>
+        <li><strong>Paralyse</strong> with a non-depolarising agent if temperature does not fall — under sedation, with electroencephalographic monitoring if available.</li>
+        <li><strong>Antipyretics do not work</strong> here; the hypothalamic set point is normal.</li>
+        <li><strong>Dantrolene is not useful</strong> for life-threatening hyperthermia from causes other than malignant hyperthermia — a Class 3, No Benefit position on randomised evidence. The one place the guideline leaves the door ajar is MDMA toxicity, where it rates dantrolene as uncertain rather than useless. It is never a substitute for immersion and sedation.</li>
+        <li><strong>Look for the consequences:</strong> rhabdomyolysis, acute kidney injury, hepatic failure, and disseminated intravascular coagulation.</li>
+      </ul>
+    </div>
+
+    <h3>Serotonin toxicity and neuroleptic malignant syndrome</h3>
+    <p>Both produce hyperthermia with altered mental state and abnormal neuromuscular tone, and both are treated by stopping the offending agent, cooling, and sedating. The distinction is mostly in the tone and the tempo: serotonin toxicity comes on within hours of a serotonergic drug and produces hyperreflexia and clonus that are most marked in the lower limbs; neuroleptic malignant syndrome evolves over days with lead-pipe rigidity and bradyreflexia. Cyproheptadine is an oral adjunct in serotonin toxicity; bromocriptine and dantrolene are sometimes used in neuroleptic malignant syndrome. Neither is a resuscitation drug, and neither replaces cooling.</p>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="remove">
+  <div class="col">
+    <p class="sec-index">8</p>
+    <h2 class="sec">Removing the poison</h2>
+    <p class="lede">Decontamination and enhanced elimination sit below resuscitation in priority and above antidotes in frequency of misuse. Both have narrow, defensible indications.</p>
+
+    <h3>Gastrointestinal decontamination</h3>
+    <div class="panel tool" id="ac-tool">
+      <h3>Should this patient get activated charcoal?</h3>
+      <div id="acChecks" style="margin-top:12px"></div>
+      <div class="out empty" id="acOut">Answer the questions above.</div>
+    </div>
+
+    <p>Activated charcoal is most useful early after ingestion of a substantial dose of an adsorbable poison in a patient who can protect their airway or is already intubated. It does not adsorb metals including iron and lithium, alcohols, or corrosives. Whole-bowel irrigation has a much narrower role: sustained-release or enteric-coated cardiotoxic preparations, ingested metal such as iron or lead-containing foreign bodies, and body packers. Gastric lavage is essentially obsolete and should not be part of routine care. Induced emesis has no place.</p>
+
+    <div class="flag">
+      <h4>Dermal decontamination protects the resuscitation team</h4>
+      <p>In organophosphate, nerve-agent, hydrofluoric-acid, and other significant dermal exposures, remove all clothing and irrigate copiously with soap and water, with staff wearing appropriate protective barriers. Secondary contamination of emergency staff is a documented and preventable event. Decontaminate before the patient enters the resuscitation area wherever the clinical state allows it.</p>
+    </div>
+
+    <h3>Enhanced elimination</h3>
+    <p>Urinary alkalinisation increases the ionised fraction of weak acids in the tubular lumen and prevents their reabsorption. It is used chiefly for <strong>salicylate</strong> and for phenobarbital and the chlorophenoxy herbicides. Give sodium bicarbonate and target a urine pH of about 7.5 to 8.5, checking urine pH hourly. It fails without potassium: hypokalaemia causes the kidney to exchange potassium for hydrogen ion and acidify the urine despite systemic alkalaemia. Replace potassium aggressively, and watch for the falling ionised calcium.</p>
+
+    <div class="panel tool" id="dial-tool">
+      <h3>Is this poison dialysable?</h3>
+      <div style="margin-top:14px">
+        <label class="fld" for="dialSel">Poison</label>
+        <select id="dialSel">
+          <option value="">Select</option>
+          <option value="salicylate">Salicylate</option>
+          <option value="lithium">Lithium</option>
+          <option value="methanol">Methanol</option>
+          <option value="eg">Ethylene glycol</option>
+          <option value="metformin">Metformin</option>
+          <option value="valproate">Valproate</option>
+          <option value="theophylline">Theophylline</option>
+          <option value="carbamazepine">Carbamazepine</option>
+          <option value="phenobarb">Phenobarbital</option>
+          <option value="thallium">Thallium</option>
+          <option value="baclofen">Baclofen</option>
+          <option value="tca">Tricyclic antidepressant</option>
+          <option value="digoxin">Digoxin</option>
+          <option value="ccb">Calcium channel blocker</option>
+          <option value="bb">Beta-blocker</option>
+        </select>
+      </div>
+      <div class="out empty" id="dialOut">Select a poison.</div>
+    </div>
+
+    <p class="mini">Dialysability depends on molecular size, protein binding, volume of distribution, and endogenous clearance. A poison with a large volume of distribution — tricyclics, digoxin, most calcium channel blockers — cannot be meaningfully removed no matter how long the circuit runs, because the plasma compartment holds almost none of it.</p>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="cellular">
+  <div class="col">
+    <p class="sec-index">9</p>
+    <h2 class="sec">Cellular poisons: cyanide and methaemoglobinaemia</h2>
+    <p class="lede">Two poisonings in which the patient is dying of impaired oxygen use rather than impaired oxygen delivery, and in which the antidote is the resuscitation.</p>
+
+    <h3>Cyanide</h3>
+    <p>Cyanide blocks the mitochondrial electron transport chain, so aerobic respiration and adenosine triphosphate production stop while arterial oxygen content stays normal. The clinical result is cardiovascular collapse, profound lactic acidaemia, depressed consciousness, seizures, and death. Confirmatory blood cyanide measurement is almost never available in clinical time, so the decision to treat is a clinical one.</p>
+
+    <div class="flag">
+      <h4>Treat on suspicion</h4>
+      <p>Do not wait for a confirmatory test. Treat empirically in the patient pulled from a structure fire, the laboratory or industrial worker, and the deliberate ingestion, who presents with cardiac arrest, altered mental status, a high plasma lactate, severe metabolic acidosis, or hypotension. Cyanide and carbon monoxide poisoning frequently coexist in smoke inhalation.</p>
+    </div>
+
+    <ul class="tight">
+      <li><strong>Hydroxocobalamin is first choice</strong> (Class 1). It scavenges cyanide on an equimolar basis to form cyanocobalamin, acts rapidly, and — unlike sodium nitrite — does not cause hypotension or reduce oxygen-carrying capacity, which is why it is preferred in smoke inhalation.</li>
+      <li><strong>Sodium nitrite together with sodium thiosulfate</strong> is recommended when hydroxocobalamin is unavailable (Class 1). Note the 2025 wording: it is a combination recommendation, not nitrite alone. Nitrite induces methaemoglobinaemia, which binds cyanide — and which is exactly why it is a poor choice alongside carbon monoxide poisoning. Paediatric and anaemic dosing must be precise.</li>
+      <li><strong>Where carbon monoxide and cyanide coexist</strong> — the house fire — and hydroxocobalamin is unavailable, give <strong>sodium thiosulfate alone</strong> (Class 2a). This is the 2025 answer to the old dilemma of not wanting to add methaemoglobin to carboxyhaemoglobin in a patient whose oxygen-carrying capacity is already compromised.</li>
+      <li><strong>Adding sodium thiosulfate to hydroxocobalamin</strong> may be reasonable (Class 2b, downgraded in 2025). It donates sulfur for the conversion of cyanide to thiocyanate, but is slow.</li>
+      <li><strong>100% oxygen</strong> remains standard practice on the logic that the defect is cellular oxygen use, though the 2025 section no longer carries a separate graded recommendation for it.</li>
+      <li>Expect hydroxocobalamin to turn skin, urine, and plasma deep red, and to interfere with colorimetric laboratory assays and with co-oximetry. Warn the laboratory before the samples arrive.</li>
+    </ul>
+
+    <h3>Methaemoglobinaemia</h3>
+    <p>An oxidant stressor converts haem iron from the ferrous to the ferric state, and ferric haemoglobin neither binds nor delivers oxygen. Nitrates and nitrites, dapsone, benzocaine and prilocaine, phenazopyridine, and aniline compounds are the usual culprits. Moderate concentrations are tolerated; severe methaemoglobinaemia produces cardiovascular collapse.</p>
+
+    <div class="cool">
+      <h4>The saturation gap</h4>
+      <p>The patient is dusky and breathless, the pulse oximeter reads in the low-to-mid eighties and refuses to move with supplemental oxygen, and the arterial blood gas reports a normal oxygen tension with a normal calculated saturation. That discrepancy — a measured oximeter saturation far below the saturation calculated from the gas — is the diagnosis until co-oximetry confirms it.</p>
+    </div>
+
+    <ul class="tight">
+      <li><strong>Methylene blue is the treatment</strong> (Class 1), acting as a cofactor for the reduction of methaemoglobin back to haemoglobin.</li>
+      <li><strong>Exchange transfusion</strong> (Class 2b) and <strong>hyperbaric oxygen</strong> (Class 2b) may be reasonable when methylene blue fails, though the fall in methaemoglobin with hyperbaric therapy can take hours and it is impractical during cardiopulmonary collapse.</li>
+      <li><strong>N-acetylcysteine is not recommended</strong> (Class 3: No Benefit) — a blinded crossover volunteer study found no reduction in nitrite-induced methaemoglobin.</li>
+      <li><strong>Ascorbic acid may be reasonable only when methylene blue is contraindicated or unavailable</strong> (Class 2b — upgraded in 2025 from not recommended, and the qualifier is the whole point). It acts slowly and needs repeated doses over hours, so it will not rescue a collapsing patient. In G6PD deficiency, where methylene blue may fail and may cause haemolysis, this is the situation the recommendation was written for.</li>
+    </ul>
+
+    <div class="note">
+      <h4>Glucose-6-phosphate dehydrogenase deficiency</h4>
+      <p>Methylene blue may fail to reduce methaemoglobin in G6PD deficiency and can precipitate haemolysis. Enzyme activity testing is almost never available in real time, so the decision is clinical. This matters more here than in most of the world: G6PD deficiency is common in parts of the Arabian Peninsula, and a patient's own or family history of haemolysis after fava beans, sulfonamides, or naphthalene should shape the plan before the drug is drawn up. Where methylene blue is contraindicated or ineffective, exchange transfusion and hyperbaric oxygen are the fallbacks.</p>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="guideline">
+  <div class="col">
+    <p class="sec-index">10</p>
+    <h2 class="sec">What the guideline recommends, and how strongly</h2>
+    <p class="lede">Toxicological resuscitation runs on thin evidence, and the grading system is the honest record of how thin. Only 2 of the 235 recommendations in Part 10 are supported by Level A evidence — and both of them are in this chapter's territory: give atropine immediately in organophosphate poisoning, and pralidoxime is reasonable in adults. Everything else you do to a poisoned patient rests on weaker ground. Knowing which is which changes how hard you should argue for a therapy at three in the morning.</p>
+
+    <p>The full breakdown, for the whole of Part 10: 2 recommendations rest on Level A evidence, 9 on randomised Level B, 32 on non-randomised Level B, 67 on limited data and 125 on expert opinion alone. By strength, 66 are Class 1, 84 Class 2a, 58 Class 2b, 21 Class 3 No Benefit and 6 Class 3 Harm.</p>
+
+    <p>This is not a criticism of the guideline; it is a description of the field. Cardiac arrest from poisoning is rare outside opioid overdose, the cases are heterogeneous, case reports are subject to publication bias, and randomising critically poisoned patients — many of whom have attempted self-harm — raises real ethical difficulty. The writing group says so explicitly. The practical consequence is that a Class 1 recommendation built on limited data still means "do it", but it also means the next case series could move it.</p>
+
+    <div class="note">
+      <h4>What changed in October 2025</h4>
+      <p>This chapter follows Part 10 of the 2025 guidelines, which superseded the 2023 focused update on 22 October 2025. If your departmental protocol was written against the 2023 document, these are the changes that invalidate parts of it:</p>
+      <ul>
+        <li><strong>Pralidoxime</strong> — the adult dose is now 2 g infused over 15–30 minutes, explicitly not bolused, with maintenance raised from 400–600 mg/hour to 1 g/hour.</li>
+        <li><strong>Lipid emulsion</strong> — dosing is split at 70 kg, above which weight-based calculation is abandoned for a fixed 100 mL bolus and a 200–250 mL infusion.</li>
+        <li><strong>Lipid emulsion in calcium-channel-blocker and beta-blocker poisoning</strong> — upgraded from "not recommended" and "not likely to be beneficial" to "usefulness uncertain". Not an endorsement.</li>
+        <li><strong>Calcium</strong> — now also recommended in beta-blocker poisoning.</li>
+        <li><strong>Sodium bicarbonate</strong> — local anaesthetics added to the indication; hyperventilation alongside bicarbonate is now a recommendation in its own right.</li>
+        <li><strong>Methylene blue</strong> — a single 7 mg/kg ceiling, replacing 5–7 mg/kg.</li>
+        <li><strong>Ascorbic acid in methaemoglobinaemia</strong> — from "not recommended" to "may be reasonable, only where methylene blue is contraindicated or unavailable".</li>
+        <li><strong>Cyanide</strong> — nitrite and thiosulfate are now recommended as a combination; thiosulfate alone is the answer where carbon monoxide coexists and hydroxocobalamin is unavailable.</li>
+        <li><strong>Cardiac glycosides</strong> — the atropine, pacing, antiarrhythmic and extracorporeal-removal recommendations were all withdrawn, leaving only the antibody.</li>
+        <li><strong>Cocaine</strong> — beta-adrenergic antagonists in vasospasm or hypertensive emergency are now explicitly not recommended.</li>
+        <li><strong>Opioids</strong> — an antagonist during cardiac arrest moved from "no known benefit" to "may be reasonable, provided it does not interfere with CPR".</li>
+        <li><strong>Hyperthermia</strong> — ice water immersion named as the preferred method, a cooling rate of at least 0.15&nbsp;°C per minute specified, and a stopping point of 38.6&nbsp;°C.</li>
+        <li><strong>Volatile hydrocarbons</strong> — an entirely new section.</li>
+      </ul>
+      <p style="margin-top:10px">Separately, to keep grading consistent across the whole document, many recommendations were reassigned to expert opinion. A recommendation can therefore appear to have weakened without any new evidence arriving.</p>
+    </div>
+
+    <div class="panel">
+      <h4>Reading the classes</h4>
+      <div class="legend">
+        <div><span class="cor c1">Class 1</span><span>Strong. Benefit greatly outweighs risk. Do it.</span></div>
+        <div><span class="cor c2a">Class 2a</span><span>Moderate. Reasonable to do; benefit outweighs risk.</span></div>
+        <div><span class="cor c2b">Class 2b</span><span>Weak. May be reasonable; usefulness uncertain.</span></div>
+        <div><span class="cor c3n">No benefit</span><span>Not recommended; unlikely to help.</span></div>
+        <div><span class="cor c3h">Harm</span><span>Potentially harmful. Do not do it.</span></div>
+      </div>
+      <p class="mini" style="margin:14px 0 0">Level of evidence is separate from class. A means high-quality randomised data; B-R and B-NR are moderate randomised and non-randomised; C-LD is limited data; C-EO is expert opinion alone.</p>
+    </div>
+
+    <div class="panel tool" id="rec-tool">
+      <h3>Recommendation browser</h3>
+      <p class="mini">Recommendations of Part 10 of the 2025 AHA guidelines, summarised in plain language with the class and level of evidence assigned there. Consult the source for exact wording and supporting text.</p>
+      <div style="margin-top:14px">
+        <label class="fld" for="recSel">Poisoning</label>
+        <select id="recSel">
+          <option value="">Select</option>
+          <option value="bb">Beta-blockers</option>
+          <option value="ccb">Calcium channel blockers</option>
+          <option value="na">Sodium-channel blockers</option>
+          <option value="coc">Cocaine</option>
+          <option value="dig">Digoxin and cardiac glycosides</option>
+          <option value="la">Local anaesthetics</option>
+          <option value="cy">Cyanide</option>
+          <option value="met">Methaemoglobinaemia</option>
+          <option value="op">Organophosphates and carbamates</option>
+          <option value="opi">Opioids</option>
+          <option value="benzo">Benzodiazepines</option>
+          <option value="symp">Sympathomimetics</option>
+          <option value="vol">Volatile hydrocarbons</option>
+          <option value="hyper">Hyperthermia (any cause)</option>
+          <option value="ecmo">Venoarterial ECMO</option>
+        </select>
+      </div>
+      <div class="out empty" id="recOut">Select a poisoning to see the recommendations and how strongly each is made.</div>
+    </div>
+
+    <div class="note">
+      <h4>Where the guideline stops</h4>
+      <p>The writing groups name their own gaps, and they are the questions you will actually face. What is the best empirical dose of digoxin antibody in arrest? Which patients with organophosphate poisoning benefit from an oxime, which oxime, and at what dose? What physiological or electrocardiographic target should you treat to in sodium-channel blockade to prevent arrest, rather than treating arrest once it happens? Is the optimal treatment of non-bupivacaine local anaesthetic toxicity the same as for bupivacaine? Does gastrointestinal decontamination help in life-threatening beta-blocker or calcium-channel-blocker poisoning, particularly with extended-release preparations? What is the optimal timing of ECMO — periarrest, or earlier? When you find yourself without an answer in one of these areas, it is because there is not one. Call the toxicologist, document your reasoning, and publish the case.</p>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="formulary">
+  <div class="col">
+    <p class="sec-index">11</p>
+    <h2 class="sec">Antidote formulary</h2>
+    <p class="lede">Doses commonly used in resuscitation from critical poisoning, calculated for the weight entered at the top of the page. Adapted from the antidote table of the 2023 AHA focused update.</p>
+
+    <div class="panel tool">
+      <div class="grid2">
+        <div><label class="fld" for="fmSearch">Filter by antidote or poison</label>
+          <input type="text" id="fmSearch" placeholder="e.g. calcium, cyanide, bicarbonate"></div>
+        <div><label class="fld" for="fmSort">Show</label>
+          <select id="fmSort">
+            <option value="all">All antidotes</option>
+            <option value="cardio">Cardiovascular poisoning</option>
+            <option value="neuro">Neurological and respiratory</option>
+            <option value="cell">Cellular and metabolic poisons</option>
+          </select></div>
+      </div>
+      <div id="fmOut" style="margin-top:18px"></div>
+    </div>
+
+    <p class="mini">Most antidotes are repeated and titrated to the control of critical signs rather than given as a single fixed dose, and the ideal dose of many is genuinely unknown. Large doses are frequently required to overcome competitive inhibition at a receptor or channel. Consult a clinical toxicologist or your poison centre for detailed administration instructions.</p>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="readiness">
+  <div class="col">
+    <p class="sec-index">12</p>
+    <h2 class="sec">Local readiness</h2>
+    <p class="lede">Nothing in this chapter works if the antidote is not in the building. Antidote stocking is a resuscitation intervention, and it is the one that has to be done before the patient arrives.</p>
+
+    <p>Audit your own department against the list below. For each item the questions are the same: do we stock it, how much, where exactly is it, how long does it take to reach the resuscitation bay, and who can authorise release out of hours?</p>
+
+    <div class="panel">
+      <h4>Antidote stock audit</h4>
+      <ul>
+        <li><strong>Immediately available in the resuscitation area:</strong> sodium bicarbonate, calcium chloride or gluconate, atropine, naloxone, glucose 50%, regular insulin, magnesium sulfate, benzodiazepines, 20% lipid emulsion</li>
+        <li><strong>Available within minutes from pharmacy:</strong> glucagon, methylene blue, hydroxocobalamin, sodium thiosulfate, pralidoxime, digoxin-specific antibody fragments, fomepizole or ethanol, pyridoxine, N-acetylcysteine, deferoxamine</li>
+        <li><strong>Regionally held with a known transfer pathway:</strong> antivenoms, large-volume digoxin antibody stock, dimercaprol and succimer, physostigmine</li>
+        <li><strong>Quantities matter more than presence.</strong> A single vial of hydroxocobalamin or two vials of digoxin antibody is a stocking failure dressed as a success. Stock enough for one severe adult case, not one dose.</li>
+      </ul>
+    </div>
+
+    <div class="cool">
+      <h4>Systems that shorten the interval</h4>
+      <ul>
+        <li>A written, laminated antidote location map in the resuscitation room</li>
+        <li>Weight-based dosing sheets prepared in advance for the high-acuity antidotes — insulin, bicarbonate, calcium, lipid emulsion</li>
+        <li>A standing arrangement with the dialysis service for out-of-hours emergency haemodialysis, with salicylate and toxic alcohol poisoning named explicitly</li>
+        <li>A named route to extracorporeal life support and the time it actually takes, measured rather than assumed</li>
+        <li>A poison-centre or clinical-toxicology number displayed where the team can see it, and used early</li>
+      </ul>
+    </div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="cases">
+  <div class="col">
+    <p class="sec-index">13</p>
+    <h2 class="sec">Cases</h2>
+    <p class="lede">Seven decisions taken from the resuscitation room. Choose an answer to see the reasoning.</p>
+    <div id="quiz"></div>
+    <div class="out" id="quizScore" style="display:none"></div>
+    <hr class="rule">
+  </div>
+</section>
+
+<section id="refs">
+  <div class="col">
+    <p class="sec-index">14</p>
+    <h2 class="sec">References and further reading</h2>
+    <ol class="refs">
+      <li id="r1">Cao D, Arens AM, Chow SL, et al; on behalf of the American Heart Association. Part 10: adult and pediatric special circumstances of resuscitation: 2025 American Heart Association Guidelines for Cardiopulmonary Resuscitation and Emergency Cardiovascular Care. <em>Circulation.</em> 2025;152(suppl 2):S578–S672. doi:10.1161/CIR.0000000000001380 — <strong>the current guideline and the primary source for this chapter.</strong></li>
+      <li>Lavonas EJ, Akpunonu PD, Arens AM, et al; for the American Heart Association. 2023 American Heart Association focused update on the management of patients with cardiac arrest or life-threatening toxicity due to poisoning: an update to the American Heart Association Guidelines for Cardiopulmonary Resuscitation and Emergency Cardiovascular Care. <em>Circulation.</em> 2023;148(16):e149–e184. doi:10.1161/CIR.0000000000001161</li>
+      <li>Panchal AR, Bartos JA, Cabañas JG, et al. Part 3: adult basic and advanced life support: 2020 American Heart Association Guidelines for Cardiopulmonary Resuscitation and Emergency Cardiovascular Care. <em>Circulation.</em> 2020;142(16 suppl 2):S366–S468.</li>
+      <li>Topjian AA, Raymond TT, Atkins D, et al. Part 4: pediatric basic and advanced life support: 2020 American Heart Association Guidelines for Cardiopulmonary Resuscitation and Emergency Cardiovascular Care. <em>Circulation.</em> 2020;142(16 suppl 2):S469–S523.</li>
+      <li>Dezfulian C, Orkin AM, Maron BA, et al. Opioid-associated out-of-hospital cardiac arrest: distinctive clinical features and implications for health care and public responses: a scientific statement from the American Heart Association. <em>Circulation.</em> 2021;143(16):e836–e870.</li>
+      <li>Chan BS, Isbister GK, Chiew A, Isoardi K, Buckley NA. Clinical experience with titrating doses of digoxin antibodies in acute digoxin poisoning (ATOM-6). <em>Clin Toxicol (Phila).</em> 2022;60(4):433–439.</li>
+      <li>EXTRIP Workgroup. Systematic reviews and recommendations on extracorporeal treatment in poisoning. Available at extrip-workgroup.org — consult the agent-specific recommendation before dialysing.</li>
+      <li>Neal JM, Neal EJ, Weinberg GL. American Society of Regional Anesthesia and Pain Medicine local anesthetic systemic toxicity checklist: 2020 version. <em>Reg Anesth Pain Med.</em> 2021;46(1):81–82.</li>
+      <li>Gosselin S, Hoegberg LCG, Hoffman RS, et al. Evidence-based recommendations on the use of intravenous lipid emulsion therapy in poisoning. <em>Clin Toxicol (Phila).</em> 2016;54(10):899–923.</li>
+      <li>Nelson LS, Howland MA, Lewin NA, Smith SW, Goldfrank LR, Hoffman RS, eds. <em>Goldfrank's Toxicologic Emergencies.</em> 11th ed. McGraw-Hill.</li>
+    </ol>
+    <div class="note" style="margin-top:26px">
+      <h4>Scope and use</h4>
+      <p>This chapter is a teaching and decision-support resource for clinicians. Doses are those commonly reported in the resuscitation literature and are starting points for titration in a critically poisoned patient, not prescriptions. Every calculated dose should be checked against the concentration of the preparation in your own department and rounded to a volume your equipment can deliver. Local protocols, product formulations, and the advice of a clinical toxicologist take precedence.</p>
+      <p style="margin-top:10px">Recommendation classes quoted in this chapter are those of Part 10 of the 2025 guidelines. Where a class differs between the adult and paediatric recommendation, the adult grading is given and the difference noted.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Clinical Toxicology in Saudi Arabia</strong> &nbsp;&middot;&nbsp; Chapter 3: Resuscitation of the poisoned patient</p>
+    <p>Musa Suliman Alfaifi &nbsp;&middot;&nbsp; Clinical Toxicologist</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var state={wt:70,paed:false};
+var listeners=[];
+function onWeight(fn){listeners.push(fn);}
+function fire(){listeners.forEach(function(f){try{f();}catch(e){}});}
+function num(v,d){d=(d===undefined)?1:d;var x=Number(v);if(!isFinite(x))return "—";return x.toFixed(d).replace(/\.0+$/,"").replace(/(\.\d*?)0+$/,"$1");}
+function cap(v,m){return (m!=null&&v>m)?m:v;}
+function rng(a,b,u){return num(a)+"–"+num(b)+" "+u;}
+
+var wtEl=document.getElementById('wt');
+var bA=document.getElementById('mAdult'), bP=document.getElementById('mPaed');
+function readWt(){
+  var v=parseFloat(wtEl.value), w=document.getElementById('wtWarn'), msg='';
+  if(!isFinite(v)||v<=0){state.wt=70;msg='Enter a weight in kilograms. Doses shown for 70 kg until you do.';}
+  else if(v<2){state.wt=2;msg='Below 2 kg: doses shown for 2 kg. Verify every dose against a neonatal reference.';}
+  else if(v>250){state.wt=250;msg='Above 250 kg: doses shown for 250 kg. Consider dosing weight rather than actual body weight.';}
+  else{
+    state.wt=v;
+    if(!state.paed&&v<30)msg='Adult dosing selected at '+num(v,0)+' kg. For antidote dosing a child is anyone under 18 — switch to Child if that applies.';
+    else if(state.paed&&v>60)msg='Paediatric dosing at '+num(v,0)+' kg. Doses are capped at the adult maximum wherever the source specifies one, so most will match adult dosing at this weight.';
+  }
+  if(msg){w.textContent=msg;w.hidden=false;}else{w.hidden=true;}
+  fire();
+}
+wtEl.addEventListener('input',readWt);
+var ageBtn=document.getElementById('ageHelp'),agePanel=document.getElementById('agePanel');
+if(ageBtn){ageBtn.addEventListener('click',function(){agePanel.hidden=!agePanel.hidden;});}
+bA.addEventListener('click',function(){state.paed=false;bA.setAttribute('aria-pressed','true');bP.setAttribute('aria-pressed','false');readWt();});
+bP.addEventListener('click',function(){state.paed=true;bP.setAttribute('aria-pressed','true');bA.setAttribute('aria-pressed','false');readWt();});
+
+/* ---------------- toxidrome ---------------- */
+var TD=[
+ {n:"Opioid",k:{tdPupil:"small",tdMent:"depressed",tdRr:"slow",tdHr:"brady"},
+  r:"Ventilation is the priority; naloxone titrated to adequate respiration, not to full arousal. Consider a naloxone infusion for long-acting agents. Non-cardiogenic pulmonary oedema is described."},
+ {n:"Sedative–hypnotic",k:{tdPupil:"mid",tdMent:"depressed",tdRr:"slow",tdSkin:"normal"},
+  r:"Supportive care and airway protection. Avoid flumazenil in undifferentiated overdose — seizure risk and no role in arrest."},
+ {n:"Cholinergic",k:{tdPupil:"small",tdSkin:"sweat",tdHr:"brady",tdOther:"secretions"},
+  r:"Atropine doubled every 5 minutes until bronchorrhoea and bronchospasm clear; an oxime for organophosphates; benzodiazepines for seizures; dermal decontamination with staff protection. Avoid suxamethonium."},
+ {n:"Sympathomimetic",k:{tdPupil:"large",tdSkin:"sweat",tdMent:"agitated",tdHr:"tachy"},
+  r:"Sedation first and generously. Rapid external cooling for hyperthermia. Avoid antipsychotics and avoid prolonged restraint without sedation. Benzodiazepines before any antihypertensive."},
+ {n:"Antimuscarinic",k:{tdPupil:"large",tdSkin:"dry",tdMent:"agitated",tdHr:"tachy",tdOther:"retention"},
+  r:"Sedation and cooling. Check the QRS — many antimuscarinic agents also block sodium channels. Physostigmine only for pure antimuscarinic delirium with a normal QRS."},
+ {n:"Serotonin toxicity",k:{tdOther:"clonus",tdMent:"agitated",tdSkin:"sweat",tdHr:"tachy"},
+  r:"Stop the serotonergic agents, sedate with benzodiazepines, cool actively. Paralysis if hyperthermia persists. Avoid methylene blue."},
+ {n:"Neuroleptic malignant syndrome",k:{tdOther:"rigid",tdSkin:"sweat",tdMent:"depressed",tdHr:"tachy"},
+  r:"Withdraw the antipsychotic, cool, sedate, support renal function against rhabdomyolysis. Evolves over days rather than hours."},
+ {n:"Salicylate",k:{tdRr:"fast",tdMent:"agitated",tdSkin:"sweat",tdHr:"tachy"},
+  r:"Do not remove the patient's own hyperventilation. Alkalinise, replace potassium, arrange urgent haemodialysis for severe toxicity, and avoid intubation if at all possible."},
+ {n:"Nicotinic (early organophosphate or nerve agent)",k:{tdOther:"fasc",tdSkin:"sweat",tdPupil:"small"},
+  r:"Atropine does not reverse nicotinic effects. Anticipate ascending weakness and diaphragmatic failure; give an oxime early and secure the airway before it fails."}
+];
+var tdIds=["tdPupil","tdSkin","tdMent","tdHr","tdRr","tdOther"];
+function tdRun(){
+  var sel={},cnt=0;
+  tdIds.forEach(function(id){var v=document.getElementById(id).value;if(v){sel[id]=v;cnt++;}});
+  var out=document.getElementById('tdOut');
+  if(cnt<2){out.className='out empty';out.textContent='Choose at least two findings.';return;}
+  var scored=TD.map(function(t){
+    var hit=0,miss=0;
+    for(var id in sel){ if(t.k[id]){ if(t.k[id]===sel[id])hit++; else miss++; } }
+    return {t:t,s:hit-miss*0.75,hit:hit};
+  }).filter(function(x){return x.hit>0;}).sort(function(a,b){return b.s-a.s;}).slice(0,3);
+  if(!scored.length||scored[0].s<=0){out.className='out';out.innerHTML='<strong>No single toxidrome fits.</strong> Mixed ingestion, a partially treated syndrome, and non-toxicological causes all produce incomplete pictures. Resuscitate to physiology: glucose, electrocardiogram, blood gas, and a temperature.';return;}
+  var html='';
+  scored.forEach(function(x,i){
+    html+='<div class="step"><div class="n">'+(i+1)+'</div><div class="b"><div class="t">'+x.t.n+'</div><div class="d">'+x.t.r+'</div></div></div>';
+  });
+  html+='<p class="mini" style="margin:12px 0 0">Ranked by fit to the findings entered. A toxidrome is a hypothesis to act on, not a diagnosis.</p>';
+  out.className='out';out.innerHTML=html;
+}
+tdIds.forEach(function(id){document.getElementById(id).addEventListener('change',tdRun);});
+
+/* ---------------- airway checklist ---------------- */
+var AW=[
+ {id:"aw1",t:"Apnoea, inadequate tidal volume, or failing respiratory effort",w:2},
+ {id:"aw2",t:"Loss of protective airway reflexes with active vomiting or copious secretions",w:2},
+ {id:"aw3",t:"Progressive fall in conscious level rather than a stable one",w:1},
+ {id:"aw4",t:"Seizures needing deep sedation, or status epilepticus",w:2},
+ {id:"aw5",t:"Hyperthermia needing deep sedation or paralysis to allow cooling",w:2},
+ {id:"aw6",t:"Airway burn, stridor, or drooling after a caustic or hydrocarbon exposure",w:2},
+ {id:"aw7",t:"Haemodynamic instability requiring transfer, dialysis, or cannulation",w:1},
+ {id:"aw8",t:"Salicylate poisoning suspected",w:0,flag:"sal"},
+ {id:"aw9",t:"Organophosphate or carbamate poisoning suspected",w:0,flag:"op"}
+];
+(function(){
+  var box=document.getElementById('awChecks'),h='';
+  AW.forEach(function(a){
+    h+='<label style="display:flex;gap:9px;align-items:flex-start;font-family:var(--sans);font-size:14.5px;margin-bottom:9px;line-height:1.45;cursor:pointer">'+
+       '<input type="checkbox" id="'+a.id+'" style="margin-top:4px"><span>'+a.t+'</span></label>';
+  });
+  box.innerHTML=h;
+  AW.forEach(function(a){document.getElementById(a.id).addEventListener('change',awRun);});
+})();
+function awRun(){
+  var score=0,flags=[];
+  AW.forEach(function(a){ if(document.getElementById(a.id).checked){ score+=a.w; if(a.flag)flags.push(a.flag); } });
+  var out=document.getElementById('awOut');
+  if(score===0&&!flags.length){out.className='out empty';out.textContent='Select any findings that apply.';return;}
+  var h='';
+  if(score>=2){
+    h+='<div class="big" style="color:var(--artery)">Intubate</div><p style="margin:6px 0 10px">At least one hard indication is present. Reduce the induction dose, have vasopressor running before induction, and correct acidaemia before the apnoeic period.</p>';
+  } else if(score===1){
+    h+='<div class="big" style="color:var(--amber)">Prepare, reassess</div><p style="margin:6px 0 10px">No absolute indication yet. Position the airway, give oxygen, suction, and keep the patient under continuous direct observation with the intubation trolley in the room. Re-examine within minutes, not hours.</p>';
+  } else {
+    h+='<div class="big" style="color:var(--drape)">No hard indication</div><p style="margin:6px 0 10px">Sedation alone is not an indication. Observe closely.</p>';
+  }
+  if(flags.indexOf('sal')>-1){
+    h+='<div style="border-left:3px solid var(--artery);padding-left:12px;margin:12px 0"><strong>Salicylate: avoid intubation if you possibly can.</strong> The patient\'s own minute ventilation is protective. Alkalinise, replace potassium, and get the dialysis circuit started. If intubation is unavoidable, give bicarbonate first, keep the apnoeic time minimal, and match or exceed the pre-intubation minute ventilation immediately.</div>';
+  }
+  if(flags.indexOf('op')>-1){
+    h+='<div style="border-left:3px solid var(--amber);padding-left:12px;margin:12px 0"><strong>Organophosphate: do not use suxamethonium.</strong> Plasma cholinesterase inhibition prolongs paralysis for hours. Use a non-depolarising agent, continue atropine titrated to dry secretions, and give an oxime early.</div>';
+  }
+  out.className='out';out.innerHTML=h;
+}
+
+/* ---------------- dose helpers ---------------- */
+function bicarbBolus(){var lo,hi;if(state.paed){lo=cap(state.wt*1,150);hi=cap(state.wt*3,150);}else{lo=Math.max(50,state.wt*1);hi=Math.min(150,Math.max(state.wt*2,50));}return num(lo,0)+"–"+num(hi,0)+" mEq"+(state.paed&&state.wt*3>150?" (capped at the adult maximum)":"");}
+function insulinBolus(){return num(state.wt*1,0)+" units";}
+function insulinInf(r){return num(state.wt*r,0)+" units/hour";}
+function ileBolus(){return state.wt>70?"100 mL over 2–3 minutes":num(state.wt*1.5,0)+" mL (1.5 mL/kg)";}
+function ileInf(){return state.wt>70?"200–250 mL over 15–20 minutes":num(state.wt*0.25,1)+" mL/minute (0.25 mL/kg per minute) for up to 30 minutes";}
+function caClBolus(){var mg=state.paed?cap(state.wt*20,2000):2000;return num(mg,0)+" mg ("+num(mg/100,1)+" mL of 100 mg/mL)";}
+function caGlBolus(){var mg=state.paed?cap(state.wt*60,6000):6000;return num(mg,0)+" mg ("+num(mg/100,1)+" mL of 100 mg/mL)";}
+function glucagonDose(){return state.paed?(num(state.wt*0.05,1)+"–"+num(cap(state.wt*0.15,10),1)+" mg"):"2–10 mg";}
+function mbDose(){return num(state.wt*1,0)+"–"+num(state.wt*2,0)+" mg (1–2 mg/kg)";}
+function atropineDose(){return state.paed?(num(cap(state.wt*0.02,0.5),2)+" mg (0.02 mg/kg, maximum single dose 0.5 mg, may repeat once)"):"1 mg, repeated every 3–5 minutes to a cumulative maximum of 3 mg";}
+function atropineOP(){return state.paed?(num(cap(state.wt*0.02,2),2)+" mg (0.02 mg/kg, maximum 2 mg), doubled every 5 minutes"):"1–2 mg, doubled every 5 minutes";}
+
+/* ---------------- shock router ---------------- */
+var SH={
+ ccb:[["Volume","A cautious fluid bolus of 10–20 mL/kg unless the ventricle is already failing. Reassess with echocardiography."],
+      ["Calcium","",function(){return "Calcium chloride "+caClBolus()+", or calcium gluconate "+caGlBolus()+". Repeat and titrate to blood pressure; keep ionised calcium below 1.5–2 times the upper limit of normal. Calcium is also now a recommendation in beta-blocker poisoning, where it was not before.";}],
+      ["High-dose insulin — start early","",function(){return "Bolus "+insulinBolus()+" (1 unit/kg) of regular insulin, then an infusion of 1–10 units/kg per hour ("+insulinInf(1)+" to "+insulinInf(10)+"). Start dextrose and monitor glucose and potassium.";}],
+      ["Vasopressor","Noradrenaline for vasodilatation, adrenaline when inotropy is also needed. There is no arbitrary ceiling."],
+      ["Atropine or pacing for bradycardia","",function(){return "Atropine "+atropineDose()+". This is standard advanced life support dosing — the 2025 antidote table no longer carries a poisoning-specific atropine entry for this indication. Pacing if bradycardia is the dominant problem; confirm mechanical capture, not just electrical.";}],
+      ["Methylene blue for refractory vasoplegia","",function(){return mbDose()+", repeated hourly if needed, with an infusion of 1 mg/kg per hour. Maximum 7 mg/kg = "+num(state.wt*7,0)+" mg.";}],
+      ["Lipid emulsion — uncertain, and last","The usefulness of lipid emulsion in refractory shock from calcium-channel-blocker poisoning is rated <strong>uncertain</strong> (Class 2b, expert opinion) — upgraded in 2025 from not recommended. A large retrospective study found no benefit, lipid can increase absorption of drug still in the gut, and abrupt collapse after administration is reported. If you use it, use it after everything above, never before high-dose insulin."],
+      ["Venoarterial ECMO","Reasonable for life-threatening shock refractory to pharmacological treatment. Make the call before arrest."]],
+ bb:[["Volume","Cautious fluid loading, guided by echocardiography."],
+     ["Glucagon","",function(){return glucagonDose()+" intravenously, then an infusion of 1–15 mg/hour in an adult. Anticipate vomiting — protect the airway.";}],
+     ["High-dose insulin — start early","",function(){return "Bolus "+insulinBolus()+", then 1–10 units/kg per hour ("+insulinInf(1)+" to "+insulinInf(10)+").";}],
+     ["Vasopressor","Noradrenaline or adrenaline, titrated without a preset maximum."],
+     ["Atropine or pacing","",function(){return "Atropine "+atropineDose()+"; pacing if needed. Standard advanced life support dosing, and often ineffective alone in serious poisoning.";}],
+     ["Sodium bicarbonate if the QRS is wide","",function(){return "Propranolol and other membrane-active beta-blockers cause sodium-channel blockade: "+bicarbBolus()+" as a bolus, repeated to narrow the QRS.";}],
+     ["Haemodialysis for atenolol, nadolol or sotalol","May be reasonable in life-threatening poisoning with these three water-soluble, renally cleared agents (Class 2b) — nadolol was added to the recommendation in 2025. The lipophilic beta-blockers are not removed."],
+     ["Lipid emulsion — uncertain, and last","The usefulness of lipid emulsion in refractory shock from beta-blocker poisoning is rated <strong>uncertain</strong> (Class 2b, expert opinion) — upgraded in 2025 from not likely to be beneficial. Reported adverse effects include clogging of extracorporeal circuit filters, pancreatitis, and sudden collapse after administration in oral overdose."],
+     ["Venoarterial ECMO","Reasonable for refractory shock."]],
+ na:[["Sodium bicarbonate","",function(){return "Bolus "+bicarbBolus()+" of a hypertonic solution ("+(state.paed?"500 mEq/L in children":"1000 mEq/L in adults")+"), repeated every 3–5 minutes and titrated to narrowing of the QRS and resolution of hypotension; then an infusion of 150 mEq/L at 1–3 mL/kg per hour. Keep sodium below 150–155 mEq/L and pH no higher than 7.50–7.55.";}],
+     ["Correct the acidaemia and hypoxia","They increase drug binding to the channel. Avoid apnoea. In the mechanically ventilated patient, hyperventilation <em>in combination with</em> sodium bicarbonate is a reasonable strategy (Class 2a) — new in 2025, and a reminder that the ventilator is part of the antidote."],
+     ["Know which knob to turn","If pH exceeds 7.55 while sodium is still below 155 mEq/L, add sodium as hypertonic saline rather than more bicarbonate. If sodium exceeds 155 while pH is still below 7.55, adjust minute ventilation instead. Whether to titrate to a biochemical target (pH about 7.50) or a physiological one (QRS narrowing and resolution of hypotension) remains debated."],
+     ["Lidocaine","A class Ib agent is a reasonable alternative or adjunct for wide-complex tachycardia."],
+     ["Vasopressor","Noradrenaline for hypotension that persists after alkalinisation."],
+     ["Benzodiazepines for seizures","Seizure produces acidaemia, which worsens the blockade. Treat fast."],
+     ["Lipid emulsion","May be used for life-threatening toxicity that has failed to respond to other therapies."],
+     ["Avoid","Class Ia and Ic antidysrhythmics, and physostigmine. Amiodarone is not the drug of choice."],
+     ["Venoarterial ECMO","Consider for recurrent arrest or refractory shock."]],
+ dig:[["Digoxin-specific antibody fragments","",function(){return "Acute ingestion of a known dose: 1 vial per 0.5 mg ingested. Chronic poisoning: vials = concentration (ng/mL) × weight (kg) ÷ 100, which for "+num(state.wt,0)+" kg is concentration × "+num(state.wt/100,2)+". Critically ill with an unknown dose: 10–20 vials empirically.";}],
+      ["Atropine and pacing while you wait","",function(){return "Atropine "+atropineDose()+" for symptomatic bradycardia — standard advanced life support, not a poisoning-specific recommendation.";}],
+      ["Treat hyperkalaemia by giving the antibody","Potassium concentration reflects poisoning severity. Give the antidote rather than driving potassium intracellularly."],
+      ["Lidocaine or phenytoin","Limited data support either for ventricular dysrhythmia while awaiting antibody effect."],
+      ["Correct magnesium","Replace magnesium; correct hypokalaemia in chronic toxicity."]],
+ last:[["Stop the injection and call for help","Secure the airway and give 100% oxygen. Hypoxia and acidaemia markedly worsen bupivacaine toxicity."],
+       ["Lipid emulsion — first line here","",function(){return "20% lipid emulsion: "+ileBolus()+", then "+ileInf()+". Dosing is now split at 70 kg — above that weight the guideline uses a fixed 100 mL bolus and a 200–250 mL infusion rather than a weight calculation. Repeat the bolus for persistent cardiovascular collapse.";}],
+       ["Benzodiazepines for seizures","Avoid propofol as the primary agent in cardiovascular instability."],
+       ["Sodium bicarbonate for wide-complex tachycardia","",function(){return bicarbBolus()+" as a bolus.";}],
+       ["Reduce adrenaline doses","Small incremental doses are usually advised in local anaesthetic toxicity; avoid vasopressin, calcium channel blockers, beta-blockers, and further local anaesthetic."],
+       ["Venoarterial ECMO","For refractory cardiogenic shock."]],
+ sympath:[["Sedation is the treatment","Benzodiazepines titrated to a calm patient. This treats the tachycardia, the hypertension, the agitation, and the heat production at once."],
+          ["Cool immediately if hyperthermic","Immersion or evaporative cooling; more effective than blankets, packs, or endovascular devices."],
+          ["Fluids","Patients are usually volume-depleted; watch for rhabdomyolysis."],
+          ["Vasodilators for persisting coronary vasospasm","Phentolamine or nitrates after adequate sedation."],
+          ["Avoid","Prolonged physical restraint without sedation; antipsychotics as first-line sedation; antipyretics."],
+          ["Mechanical support","Intra-aortic balloon pump or venoarterial ECMO for refractory cardiogenic shock."]],
+ opioid:[["Ventilate","Bag-mask ventilation or rescue breathing is the immediate priority in respiratory arrest."],
+         ["Naloxone","",function(){return (state.paed? ("0.1 mg/kg = "+num(cap(state.wt*0.1,2),2)+" mg") : "0.2–2 mg")+" intravenously, intraosseously or intramuscularly (2–4 mg intranasally), repeated every 2–3 minutes. Titrate to adequate respiration and airway reflexes, not to full arousal.";}],
+         ["Infusion for long-acting agents","Roughly two thirds of the waking dose per hour, titrated."],
+         ["Observe","Opioid effect can outlast naloxone. Keep the patient in a monitored area until consciousness and vital signs have normalised."],
+         ["In cardiac arrest","Naloxone has no known benefit once in arrest, but give it if there is any uncertainty about whether this is respiratory arrest. High-quality CPR with ventilation is the cornerstone."]],
+ unknown:[["Reassess the mechanism","Echocardiography separates pump failure from vasoplegia and changes the drug you choose."],
+          ["Volume then noradrenaline","Correct hypovolaemia, then vasoconstrict."],
+          ["Electrocardiogram","A wide QRS means sodium bicarbonate. Bradycardia with hypotension narrows the differential to a small number of treatable classes."],
+          ["Glucose, potassium, calcium, magnesium, gas, lactate","Correctable derangements are common and frequently the cause of refractoriness."],
+          ["Empirical class-specific therapy","",function(){return "Where the picture fits a cardiotoxic ingestion, high-dose insulin ("+insulinBolus()+" bolus then "+insulinInf(1)+" upward) and calcium are reasonable while the agent is unknown.";}],
+          ["Call the toxicologist and consider ECMO","Do it before arrest, not after."]]
+};
+document.getElementById('shClass').addEventListener('change',function(){
+  var k=this.value,out=document.getElementById('shOut');
+  if(!k){out.className='out empty';out.textContent='Select a class to see the escalation sequence with calculated doses.';return;}
+  renderShock();
+});
+function renderShock(){
+  var k=document.getElementById('shClass').value;if(!k)return;
+  var out=document.getElementById('shOut'),h='',n=0;
+  SH[k].forEach(function(s){
+    var body=s[2]?s[2]():s[1];
+    var stop=/^Avoid/.test(s[0]);
+    if(!stop)n++;
+    h+='<div class="step'+(stop?' stop':'')+'"><div class="n">'+(stop?'!':n)+'</div><div class="b"><div class="t">'+s[0]+'</div><div class="d">'+body+'</div></div></div>';
+  });
+  h+='<p class="mini" style="margin:12px 0 0">Doses calculated for '+num(state.wt,0)+' kg. Steps overlap in practice — start the antidote while the vasopressor is running.</p>';
+  out.className='out';out.innerHTML=h;
+}
+onWeight(renderShock);
+
+/* ---------------- HIET ---------------- */
+var hr=document.getElementById('hietRate'),hg=document.getElementById('hietGlu');
+function hietRun(){
+  var r=parseFloat(hr.value);
+  document.getElementById('hietRateLbl').textContent=num(r)+" unit"+(r===1?"":"s")+"/kg per hour";
+  var glu=parseFloat(hg.value);
+  var h='<div class="kv"><span class="k">Bolus, regular insulin (1 unit/kg)</span><span class="v">'+insulinBolus()+'</span></div>'+
+        '<div class="kv"><span class="k">Infusion at '+num(r)+' unit/kg per hour</span><span class="v">'+insulinInf(r)+'</span></div>'+
+        '<div class="kv"><span class="k">Usual range (1–10 units/kg per hour)</span><span class="v">'+insulinInf(1)+' to '+insulinInf(10)+'</span></div>';
+  var dex='';
+  if(isFinite(glu)){
+    if(glu<4){dex='<strong style="color:var(--artery)">Hypoglycaemia.</strong> Give a dextrose bolus now (adults commonly 25 g; children 0.5–1 g/kg) and increase the dextrose infusion. Do not stop the insulin for a correctable glucose.';}
+    else if(glu<8){dex='<strong>At the lower end.</strong> Increase the dextrose infusion and recheck in 15 minutes. Keep the insulin running.';}
+    else if(glu<14){dex='<strong>In range.</strong> Continue the dextrose infusion and recheck every 15–30 minutes until the requirement is stable.';}
+    else{dex='<strong>Hyperglycaemic.</strong> Dextrose may not be needed yet, but it will be. Have a concentrated dextrose infusion prepared and connected before you need it.';}
+    h+='<p style="margin:12px 0 0">'+dex+'</p>';
+  } else {
+    h+='<p class="mini" style="margin:12px 0 0">Enter a glucose to get dextrose guidance.</p>';
+  }
+  if(state.wt*r>500){h+='<p style="margin:10px 0 0;color:var(--artery)"><strong>Large infusion rate.</strong> '+insulinInf(r)+' will exhaust a standard 100-unit/mL vial quickly and needs a concentrated preparation and a dedicated pump. Confirm the concentration, the pump programming, and the dextrose supply with a second clinician before starting.</p>';}
+  h+='<p class="mini" style="margin:8px 0 0">Check potassium at baseline and every 1–2 hours; replace to the low-normal range. Expect onset over 15–60 minutes. Round to a volume your pump can actually deliver.</p>';
+  document.getElementById('hietOut').innerHTML=h;
+}
+hr.addEventListener('input',hietRun);hg.addEventListener('input',hietRun);onWeight(hietRun);
+
+/* ---------------- adjuncts ---------------- */
+var adjBtns=Array.prototype.slice.call(document.querySelectorAll('[data-adj]'));
+var adjSel=null;
+adjBtns.forEach(function(b){b.addEventListener('click',function(){
+  adjSel=b.getAttribute('data-adj');
+  adjBtns.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+  adjRun();
+});});
+function adjRun(){
+  var out=document.getElementById('adjOut');
+  if(!adjSel){out.className='out empty';out.textContent='Choose an adjunct.';return;}
+  var h='';
+  if(adjSel==='cacl'){
+    h='<div class="kv"><span class="k">Initial dose</span><span class="v">'+caClBolus()+'</span></div>'+
+      '<div class="kv"><span class="k">Infusion</span><span class="v">'+num(state.wt*20,0)+'–'+num(state.wt*40,0)+' mg/hour</span></div>'+
+      '<p style="margin:12px 0 0">Three times the elemental calcium of an equal volume of gluconate. Give through a central line wherever possible, and especially in children — extravasation causes tissue necrosis. Titrate to blood pressure and keep ionised calcium below 1.5–2 times the upper limit of normal.</p>';
+  } else if(adjSel==='cagl'){
+    h='<div class="kv"><span class="k">Initial dose</span><span class="v">'+caGlBolus()+'</span></div>'+
+      '<div class="kv"><span class="k">Infusion</span><span class="v">'+num(state.wt*60,0)+'–'+num(state.wt*120,0)+' mg/hour</span></div>'+
+      (state.wt>100&&state.paed?'<p style="margin:10px 0 0;color:var(--artery)"><strong>Check this volume.</strong> The calculated dose exceeds the usual adult dose — confirm the patient category and the ampoule concentration.</p>':'')+
+      '<p style="margin:12px 0 0">Safer peripherally than calcium chloride. Repeat boluses are usual; calcium alone rarely rescues serious calcium-channel-blocker poisoning, so start high-dose insulin alongside it rather than after it. Verify the concentration of your local preparation — 10% calcium gluconate is 100 mg/mL, but other strengths exist.</p>';
+  } else if(adjSel==='gluc'){
+    h='<div class="kv"><span class="k">Initial dose</span><span class="v">'+glucagonDose()+'</span></div>'+
+      '<div class="kv"><span class="k">Infusion (adult)</span><span class="v">1–15 mg/hour</span></div>'+
+      '<p style="margin:12px 0 0">Chiefly for beta-blocker poisoning, bypassing the beta receptor to raise intracellular cyclic AMP. Vomiting is near-universal at these doses — protect the airway. Supply is often the limiting factor; check your stock before you rely on it.</p>';
+  } else if(adjSel==='mb'){
+    h='<div class="kv"><span class="k">Initial dose</span><span class="v">'+mbDose()+'</span></div>'+
+      '<div class="kv"><span class="k">Infusion for vasodilatory shock</span><span class="v">'+num(state.wt*1,0)+' mg/hour</span></div>'+
+      '<div class="kv"><span class="k">Cumulative ceiling</span><span class="v">'+num(state.wt*5,0)+'–'+num(state.wt*7,0)+' mg</span></div>'+
+      '<p style="margin:12px 0 0">Principal indication is methaemoglobinaemia. For refractory vasodilatory shock in calcium-channel-blocker poisoning the evidence is case reports and small series, with mixed and sometimes transient responses. Repeat hourly if needed, to a maximum of 7 mg/kg. May fail, and may cause haemolysis, in G6PD deficiency; avoid in serotonergic poisoning.</p>';
+  } else if(adjSel==='ile'){
+    var asra = state.wt>70
+      ? 'Above 70 kg the guideline drops weight-based calculation: a fixed 100 mL bolus over 2–3 minutes, then 200–250 mL over 15–20 minutes.'
+      : 'At or under 70 kg: 1.5 mL/kg ('+num(state.wt*1.5,0)+' mL), then 0.25 mL/kg per minute for up to 30 minutes.';
+    h='<div class="kv"><span class="k">Bolus, 20% emulsion</span><span class="v">'+ileBolus()+'</span></div>'+
+      '<div class="kv"><span class="k">Infusion</span><span class="v">'+ileInf()+'</span></div>'+
+      '<div class="kv"><span class="k">Total dose ceiling</span><span class="v">not specified in the antidote table; ASRA caps at about '+num(state.wt*12,0)+' mL (12 mL/kg)</span></div>'+
+      '<p style="margin:12px 0 0"><strong>The 70 kg split.</strong> '+asra+'</p>'+
+      '<p style="margin:10px 0 0">First-line in local anaesthetic systemic toxicity. For other poisons it is a rescue therapy after other treatments have failed, and it is not a substitute for high-dose insulin in calcium-channel-blocker poisoning. It interferes with laboratory assays, can obstruct extracorporeal circuits, and has been associated with pancreatitis and fat overload at high cumulative volumes.</p>';
+  }
+  out.className='out';out.innerHTML=h;
+}
+onWeight(adjRun);
+
+/* ---------------- QRS ---------------- */
+var qrsEl=document.getElementById('qrsVal'),qrsSvg=document.getElementById('qrsSvg');
+var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function beatPath(x0,ms){
+  var base=78, px=0.34, qw=ms*px;
+  var amp=Math.max(20,52-(ms-80)*0.16);
+  var p="M"+x0+","+base;
+  p+=" L"+(x0+12)+","+base+" Q"+(x0+24)+","+(base-11)+" "+(x0+36)+","+base;
+  p+=" L"+(x0+58)+","+base;
+  var x=x0+58;
+  p+=" L"+(x+qw*0.18)+","+(base+6);
+  p+=" L"+(x+qw*0.48)+","+(base-amp);
+  p+=" L"+(x+qw*0.80)+","+(base+18);
+  p+=" L"+(x+qw)+","+base;
+  x=x+qw;
+  p+=" L"+(x+26)+","+base;
+  p+=" Q"+(x+52)+","+(base-20)+" "+(x+78)+","+base;
+  p+=" L"+(x0+300)+","+base;
+  return p;
+}
+function drawQrs(ms){
+  var g='<path class="grid" d="M0,78 L600,78"/>';
+  qrsSvg.innerHTML=g+'<path d="'+beatPath(0,ms)+'"/><path d="'+beatPath(300,ms)+'"/>';
+  document.getElementById('qrsLbl').textContent=num(ms,0)+" ms";
+}
+function qrsRun(){
+  var ms=parseFloat(qrsEl.value);drawQrs(ms);
+  var out=document.getElementById('qrsOut'),band,color,txt;
+  if(ms<100){band="No evidence of sodium-channel blockade";color="var(--drape)";
+    txt="A normal QRS does not exclude a dangerous ingestion, and it can widen over the following hours with a sustained-release or slowly absorbed preparation. Repeat the electrocardiogram. Do not give bicarbonate reflexively for a normal QRS.";}
+  else if(ms<120){band="Borderline — look again";color="var(--amber)";
+    txt="Check lead aVR for a tall terminal R wave, exclude a pre-existing bundle branch block, and repeat the electrocardiogram in 15–30 minutes. If the trend is upward or the patient is clinically toxic, start alkalinisation now rather than waiting for a threshold.";}
+  else if(ms<160){band="Sodium-channel blockade";color="var(--artery)";
+    txt="Treat. Give sodium bicarbonate boluses and repeat until the QRS narrows. Keep the patient alkalaemic and well oxygenated — acidaemia and hypoxia increase drug binding to the channel. Treat seizures immediately, since the resulting acidaemia worsens the block.";}
+  else {band="High risk of ventricular dysrhythmia";color="var(--artery)";
+    txt="Aggressive alkalinisation, continuous monitoring, and preparation for arrest. Lidocaine is a reasonable adjunct. Avoid class Ia and Ic agents; amiodarone is not the drug of choice. Consider extracorporeal support early and call the toxicologist now.";}
+  out.innerHTML='<div class="big" style="color:'+color+'">'+band+'</div>'+
+   '<p style="margin:6px 0 12px">'+txt+'</p>'+
+   '<div class="kv"><span class="k">Sodium bicarbonate bolus ('+(state.paed?"1–3":"1–2")+' mEq/kg)</span><span class="v">'+bicarbBolus()+'</span></div>'+
+   '<div class="kv"><span class="k">Repeat</span><span class="v">every 3–5 minutes until the QRS narrows</span></div>'+
+   '<div class="kv"><span class="k">Infusion</span><span class="v">150 mEq/L at '+num(state.wt*1,0)+'–'+num(state.wt*3,0)+' mL/hour</span></div>'+
+   '<div class="kv"><span class="k">Targets</span><span class="v">QRS narrowing and blood pressure; pH no higher than 7.50–7.55, sodium below 150–155, potassium replaced</span></div>';
+}
+qrsEl.addEventListener('input',qrsRun);onWeight(qrsRun);
+document.getElementById('qrsBicarb').addEventListener('click',function(){
+  var start=parseFloat(qrsEl.value);
+  if(start<=95){qrsEl.value=92;qrsRun();return;}
+  var end=Math.max(88,start-Math.min(60,(start-80)*0.62));
+  if(reduceMotion){qrsEl.value=end;qrsRun();return;}
+  var t0=null,dur=1400;
+  function step(ts){
+    if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/dur);
+    qrsEl.value=Math.round(start+(end-start)*(1-Math.pow(1-k,3)));
+    qrsRun();
+    if(k<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+});
+document.getElementById('qrsReset').addEventListener('click',function(){qrsEl.value=90;qrsRun();});
+
+/* ---------------- seizures ---------------- */
+var SEIZ={
+ gen:["General ladder for a toxic seizure",[
+   "Benzodiazepine in adequate dose, repeated rapidly — under-dosing is the commonest error.",
+   "Second agent: phenobarbital, or propofol with airway control.",
+   "Check glucose, sodium, and temperature at once.",
+   "Phenytoin has no established role and is specifically avoided in theophylline and sodium-channel-blocker poisoning.",
+   "A seizure that will not stop should prompt a search for a specific antidote — see the other options here."]],
+ inh:["Isoniazid or Gyromitra mushroom",[
+   "Pyridoxine is the antidote and benzodiazepines alone will usually fail.",
+   "Known ingested dose: give 1 g of pyridoxine for every gram of isoniazid ingested.",
+   "Unknown dose in an adult: 5 g intravenously; in a child, 70 mg/kg up to 5 g.",
+   "Give it empirically in refractory seizures with a compatible history, including a patient on antituberculous therapy.",
+   "Continue benzodiazepines alongside — the two are synergistic at the GABA pathway."]],
+ hypo:["Hypoglycaemia",[
+   "Check the capillary glucose before anything else in any seizing poisoned patient.",
+   "Treat with dextrose and then look for the cause: sulfonylurea, insulin, quinine, alcohol, or salicylate in a child.",
+   "In sulfonylurea poisoning, octreotide suppresses the ongoing insulin release and prevents the rebound hypoglycaemia that follows repeated dextrose boluses.",
+   "Recheck glucose repeatedly — a single correction is not a treatment."]],
+ na:["Sodium-channel blocker",[
+   "The seizure and the wide QRS are the same problem, and each worsens the other through acidaemia.",
+   "Benzodiazepines to stop the seizure, immediately and in adequate dose.",
+   "Sodium bicarbonate for the QRS, and ventilate to prevent hypercapnia.",
+   "Avoid phenytoin, which shares the poison's mechanism.",
+   "Expect cardiovascular deterioration after the seizure — have the bicarbonate and vasopressor ready."]],
+ withd:["Alcohol or sedative withdrawal",[
+   "Benzodiazepines in escalating doses until the patient is calm; requirements can be very large.",
+   "Phenobarbital is effective when benzodiazepine requirements escalate without response.",
+   "Correct thiamine, magnesium, potassium, and phosphate.",
+   "Look for the alternative diagnosis — head injury, meningitis, hepatic encephalopathy — in a patient who does not respond as expected."]]
+};
+var seizBtns=Array.prototype.slice.call(document.querySelectorAll('[data-seiz]'));
+seizBtns.forEach(function(b){b.addEventListener('click',function(){
+  seizBtns.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+  var d=SEIZ[b.getAttribute('data-seiz')],out=document.getElementById('seizOut');
+  var h='<div class="big" style="font-size:20px">'+d[0]+'</div>';
+  d[1].forEach(function(s,i){h+='<div class="step"><div class="n">'+(i+1)+'</div><div class="b"><div class="d" style="color:var(--ink)">'+s+'</div></div></div>';});
+  out.className='out';out.innerHTML=h;
+});});
+
+/* ---------------- charcoal ---------------- */
+var AC=[
+ {id:"ac1",t:"Presenting early enough — roughly within an hour, or later after a sustained-release, antimuscarinic, or very large ingestion"},
+ {id:"ac2",t:"Airway is protected: awake and cooperative, or already intubated"},
+ {id:"ac3",t:"The poison adsorbs to charcoal — not iron, lithium, potassium, an alcohol, or a corrosive"},
+ {id:"ac4",t:"The ingestion is large enough to matter clinically"},
+ {id:"ac5",t:"No ileus, obstruction, perforation risk, or recent gastrointestinal surgery"}
+];
+(function(){
+  var box=document.getElementById('acChecks'),h='';
+  AC.forEach(function(a){h+='<label style="display:flex;gap:9px;align-items:flex-start;font-family:var(--sans);font-size:14.5px;margin-bottom:9px;line-height:1.45;cursor:pointer"><input type="checkbox" id="'+a.id+'" style="margin-top:4px"><span>'+a.t+'</span></label>';});
+  box.innerHTML=h;
+  AC.forEach(function(a){document.getElementById(a.id).addEventListener('change',acRun);});
+})();
+function acRun(){
+  var yes=AC.filter(function(a){return document.getElementById(a.id).checked;}).length;
+  var out=document.getElementById('acOut');
+  if(yes===0){out.className='out empty';out.textContent='Answer the questions above.';return;}
+  var dose=state.paed?(num(cap(state.wt*1,50),0)+" g (1 g/kg)"):"50 g (about 1 g/kg)";
+  if(yes===AC.length){
+    out.className='out';
+    out.innerHTML='<div class="big" style="color:var(--drape)">Reasonable to give</div><p style="margin:6px 0 10px">Activated charcoal '+dose+' orally or by nasogastric tube. Multiple-dose charcoal has a role in carbamazepine, dapsone, phenobarbital, quinine, and theophylline poisoning — give it only with a protected airway and audible bowel sounds.</p><p class="mini" style="margin:0">Charcoal is an adjunct. It never takes priority over airway, circulation, or an antidote.</p>';
+  } else {
+    var missing=AC.filter(function(a){return !document.getElementById(a.id).checked;}).map(function(a){return '<li>'+a.t+'</li>';}).join('');
+    out.className='out';
+    out.innerHTML='<div class="big" style="color:var(--amber)">Withhold or reconsider</div><p style="margin:6px 0 6px">These conditions are not met:</p><ul style="margin:0;padding-left:19px">'+missing+'</ul><p style="margin:10px 0 0">Aspirated charcoal causes a chemical pneumonitis that can be worse than the poisoning. When the airway is the only obstacle, intubate for the airway indication first and give charcoal afterwards — never the other way round.</p>';
+  }
+}
+onWeight(acRun);
+
+/* ---------------- dialysis ---------------- */
+var DIAL={
+ salicylate:[1,"Dialyse","Highly effective, and the treatment of choice in severe poisoning. Consider it for altered mental status, acute lung injury requiring oxygen, a rising concentration despite alkalinisation, impaired kidney function, or severe acidaemia. Get the dialysis service moving early — before the patient needs intubation, not after."],
+ lithium:[1,"Dialyse","Small, unbound, and almost entirely confined to a modest volume of distribution. Consider it for impaired kidney function with a raised concentration, or for seizures or depressed consciousness. Rebound is common after the circuit stops — expect to repeat, and recheck the concentration several hours later."],
+ methanol:[1,"Dialyse","Removes both the parent alcohol and formate, and corrects the acidaemia. Give fomepizole or ethanol first and do not wait for it to work. Continue the antidote during dialysis and dose-adjust for the extracorporeal clearance."],
+ eg:[1,"Dialyse","As for methanol, with the added indication of established kidney injury from oxalate. Fomepizole or ethanol first, dialysis alongside."],
+ metformin:[1,"Dialyse","For severe lactic acidosis, particularly with kidney impairment or shock. Dialysis corrects the acidaemia as well as removing the drug, and that is often the more urgent gain."],
+ valproate:[1,"Dialyse","Protein binding is saturable, so in massive overdose the free fraction rises and becomes dialysable. Consider it for coma, cerebral oedema, shock, or a very high concentration."],
+ theophylline:[1,"Dialyse","Consider for seizures, dysrhythmia, or a high concentration, particularly in chronic toxicity where the threshold is lower. Multiple-dose charcoal is a useful adjunct."],
+ carbamazepine:[1,"Dialyse","Consider for prolonged coma, seizures, or life-threatening toxicity that does not improve. Multiple-dose charcoal also works."],
+ phenobarb:[1,"Dialyse","Removable, though many patients are managed with supportive care and multiple-dose charcoal alone. Consider it for prolonged coma with haemodynamic compromise."],
+ thallium:[1,"Dialyse","Recommended in severe or strongly suspected significant poisoning, alongside Prussian blue. Timing dominates the benefit: start as early as possible, ideally within the first 24–48 hours, while thallium is still in the plasma compartment."],
+ baclofen:[2,"Depends on kidney function","Reasonable in severe poisoning with kidney impairment, where clearance is otherwise very slow. EXTRIP suggests against extracorporeal treatment for severe acute overdose in a patient with normal kidney function, where supportive care is expected to suffice."],
+ tca:[0,"Not dialysable","A very large volume of distribution and extensive protein binding mean almost none of the drug is in the plasma compartment. Treat with sodium bicarbonate, ventilation, vasopressors, and extracorporeal circulatory support if needed — not with dialysis."],
+ digoxin:[0,"Not dialysable","Volume of distribution is very large. Digoxin-specific antibody fragments are the treatment. Dialysis does not remove the antibody–digoxin complex in patients with normal kidney function."],
+ ccb:[0,"Not dialysable","The AHA states that dialysis is not thought to be effective for calcium-channel-blocker poisoning. Use high-dose insulin, calcium, vasopressors, and ECMO."],
+ bb:[2,"Depends on the agent","Atenolol and sotalol are water-soluble, renally cleared, and dialysable. Propranolol, metoprolol, and the other lipophilic agents are not. Identify the drug before requesting the circuit."]
+};
+document.getElementById('dialSel').addEventListener('change',function(){
+  var d=DIAL[this.value],out=document.getElementById('dialOut');
+  if(!d){out.className='out empty';out.textContent='Select a poison.';return;}
+  var c=d[0]===1?'var(--ice)':(d[0]===0?'var(--artery)':'var(--amber)');
+  out.className='out';
+  out.innerHTML='<div class="big" style="color:'+c+'">'+d[1]+'</div><p style="margin:6px 0 0">'+d[2]+'</p>'+
+   '<p class="mini" style="margin:10px 0 0">Check the agent-specific EXTRIP recommendation before committing; indications are clinical as well as concentration-based.</p>';
+});
+
+/* ---------------- formulary ---------------- */
+var FORM=[
+ {n:"Atropine",g:"cell",p:"Organophosphates, carbamates",
+  a:function(){return atropineOP();},m:"10–20% of the total loading dose per hour, up to 2 mg/hour in an adult",
+  note:"Titrate to reversal of bronchorrhoea, bronchospasm and bradycardia. In 2025 this became the only atropine entry in the antidote table — the row covering beta-blockers, calcium channel blockers, digoxin and local anaesthetics was removed, since atropine for bradycardia is standard advanced life support."},
+ {n:"Calcium chloride",g:"cardio",p:"Calcium channel blockers, beta-blockers",
+  a:function(){return caClBolus();},m:function(){return num(state.wt*20,0)+"–"+num(state.wt*40,0)+" mg/hour";},
+  note:"Beta-blockers were added to the indication in 2025. Titrate to blood pressure; do not exceed an ionised calcium 1.5–2 times the upper limit of normal. Give through a central line, especially in children."},
+ {n:"Calcium gluconate",g:"cardio",p:"Calcium channel blockers, beta-blockers",
+  a:function(){return caGlBolus();},m:function(){return num(state.wt*60,0)+"–"+num(state.wt*120,0)+" mg/hour";},
+  note:"One third the elemental calcium of chloride; safer peripherally. Same ionised calcium ceiling."},
+ {n:"Digoxin immune Fab",g:"cardio",p:"Digoxin, digitoxin",
+  a:function(){return "Acute, known dose: 1 vial per 0.5 mg ingested. Chronic: concentration (ng/mL) × "+num(state.wt/100,2)+". Critically ill, unknown dose: 10–20 vials";},m:"None",
+  note:"Each vial contains 40 mg. Lower doses may be equally effective. Paediatric dose is the same as adult."},
+ {n:"Digoxin immune Fab",g:"cardio",p:"Yellow oleander, Bufo toad venom and other cardioactive steroids",
+  a:function(){return "1200 mg (30 vials)";},m:"None",
+  note:"The paediatric dose for this indication is unknown."},
+ {n:"Flumazenil",g:"neuro",p:"Pure benzodiazepine poisoning only",
+  a:function(){return state.paed?(num(cap(state.wt*0.01,1),2)+" mg (0.01 mg/kg)"):"0.2 mg, titrated up to 1 mg";},m:"None",
+  note:"Many contraindications. No role in cardiac arrest, and associated with harm where there is a risk of seizure or arrhythmia. If opioids are also suspected, give the opioid antagonist first."},
+ {n:"Glucagon",g:"cardio",p:"Beta-blockers, calcium channel blockers",
+  a:function(){return glucagonDose();},m:"1–15 mg/hour in an adult",
+  note:"Anticipate vomiting. Reasonable in beta-blocker poisoning; usefulness in calcium-channel-blocker poisoning is rated uncertain."},
+ {n:"Hydroxocobalamin",g:"cell",p:"Cyanide",
+  a:function(){return state.paed?(num(cap(state.wt*70,5000)/1000,1)+" g (70 mg/kg)"):"5 g";},m:"Repeat doses may be necessary",
+  note:"Give on suspicion; do not wait for confirmation. Causes transient hypertension. Turns skin, urine and plasma red and interferes with colorimetric assays."},
+ {n:"Insulin (high dose)",g:"cardio",p:"Beta-blockers, calcium channel blockers",
+  a:function(){return insulinBolus()+" (1 unit/kg) of regular insulin";},m:function(){return "1–10 units/kg per hour = "+insulinInf(1)+" to "+insulinInf(10);},
+  note:"For calcium-channel-blocker poisoning the indication is hypotension. For beta-blocker poisoning it is hypotension refractory to vasopressor therapy. Monitor for hypoglycaemia, hypokalaemia and volume overload."},
+ {n:"Lipid emulsion 20%",g:"cardio",p:"Local anaesthetics",
+  a:function(){return ileBolus();},m:function(){return ileInf();},
+  note:"Dosing is split at 70 kg. All studies use 20% emulsion. Recommended in local anaesthetic toxicity; may be reasonable in sodium-channel-blocker poisoning refractory to other treatment; usefulness in refractory shock from calcium-channel-blocker or beta-blocker poisoning is rated uncertain."},
+ {n:"Methylene blue",g:"cell",p:"Methaemoglobinaemia; calcium channel blockers with vasoplegia",
+  a:function(){return mbDose();},m:function(){return num(state.wt,0)+" mg/hour (1 mg/kg per hour) for vasodilatory shock";},
+  note:function(){return "Repeat hourly if needed. Maximum 7 mg/kg = "+num(state.wt*7,0)+" mg — a single ceiling in the 2025 table, replacing the 5–7 mg/kg range printed in 2023. Use the lowest effective cumulative dose with specialist input: larger cumulative doses themselves increase the risk of haemolysis, and methylene blue may fail and may cause haemolysis in G6PD deficiency. Avoid in serotonergic poisoning.";}},
+ {n:"Naloxone",g:"neuro",p:"Opioids",
+  a:function(){return state.paed?(num(cap(state.wt*0.1,2),2)+" mg (0.1 mg/kg)"):"0.2–2 mg intravenously, intraosseously or intramuscularly; 2–4 mg intranasally";},
+  m:"Two thirds of the waking dose per hour",
+  note:"Repeat every 2–3 minutes. Titrate to reversal of respiratory depression and restoration of protective airway reflexes. Intranasal nalmefene is the other available opioid antagonist; published clinical data are more robust for naloxone."},
+ {n:"Pralidoxime",g:"cell",p:"Organophosphates",
+  a:function(){return state.paed?(num(cap(state.wt*20,2000),0)+"–"+num(cap(state.wt*50,2000),0)+" mg (20–50 mg/kg, capped at the adult 2 g dose) by infusion over 15–30 minutes — do not bolus"):"2 g by intravenous infusion over 15–30 minutes — do not bolus — or 0.6 g intramuscularly, up to 3 doses";},
+  m:function(){return state.paed?(num(cap(state.wt*10,1000),0)+"–"+num(cap(state.wt*20,1000),0)+" mg/hour (capped at the adult 1 g/hour)"):"1 g/hour";},
+  note:"The adult dose changed in 2025: higher, and given as an infusion rather than a bolus. Maintenance rose from 400–600 mg/hour to 1 g/hour. Give alongside atropine, never instead of it."},
+ {n:"Pyridoxine",g:"neuro",p:"Isoniazid, Gyromitra mushrooms, ethylene glycol (adjunct)",
+  a:function(){return state.paed?(num(cap(state.wt*70,5000)/1000,1)+" g (70 mg/kg, maximum 5 g)"):"1 g per gram of isoniazid ingested; 5 g if the dose is unknown";},m:"None",
+  note:"Not in the guideline antidote table; dosing follows standard toxicology references. For seizures that do not respond to benzodiazepines — give empirically when the history fits."},
+ {n:"Sodium bicarbonate",g:"cardio",p:"Sodium-channel blockers, cocaine, local anaesthetics",
+  a:function(){return bicarbBolus()+(state.paed?" (1–3 mEq/kg)":" (adult range; about 1–2 mEq/kg)");},m:function(){return "150 mEq/L solution at 1–3 mL/kg per hour = "+num(state.wt,0)+"–"+num(state.wt*3,0)+" mL/hour";},
+  note:"Local anaesthetics were added to the indication in 2025. Watch for hypernatraemia, alkalaemia, hypokalaemia and hypochloraemia. Adult (1 mEq/mL) and paediatric (0.5 mEq/mL) preparations differ; both are hypertonic."},
+ {n:"Sodium nitrite",g:"cell",p:"Cyanide, with sodium thiosulfate, when hydroxocobalamin is unavailable",
+  a:function(){return state.paed?(num(cap(state.wt*6,300),0)+" mg (6 mg/kg)"):"300 mg";},m:"None",
+  note:"Watch for hypotension. In 2025 the recommendation is for nitrite and thiosulfate as a combination, not nitrite alone. Avoid where carbon monoxide poisoning coexists — give thiosulfate alone instead."},
+ {n:"Sodium thiosulfate",g:"cell",p:"Cyanide",
+  a:function(){return state.paed?(num(cap(state.wt*250,12500)/1000,1)+" g (250 mg/kg)"):"12.5 g";},m:"None",
+  note:"Given with sodium nitrite when hydroxocobalamin is unavailable. Reasonable alone where carbon monoxide and cyanide poisoning coexist and hydroxocobalamin is unavailable. Adding it to hydroxocobalamin may be reasonable but is rated uncertain."}
+];
+function val(x){return (typeof x==='function')?x():x;}
+function fmRender(){
+  var q=(document.getElementById('fmSearch').value||'').toLowerCase().trim();
+  var g=document.getElementById('fmSort').value;
+  var rows=FORM.filter(function(f){
+    if(g!=='all'&&f.g!==g)return false;
+    if(!q)return true;
+    return (f.n+' '+f.p).toLowerCase().indexOf(q)>-1;
+  });
+  if(!rows.length){document.getElementById('fmOut').innerHTML='<p class="mini">Nothing matches that filter. Try the poison name instead of the antidote, or clear the search.</p>';return;}
+  var h='<div class="tblwrap" style="margin:0"><table><thead><tr><th style="min-width:130px">Antidote</th><th>Indication</th><th style="min-width:190px">Initial dose — '+num(state.wt,0)+' kg '+(state.paed?'child':'adult')+'</th><th style="min-width:170px">Maintenance</th></tr></thead><tbody>';
+  rows.forEach(function(f){
+    h+='<tr><td><strong>'+f.n+'</strong></td><td>'+f.p+'</td><td class="num">'+val(f.a)+'<div class="mini" style="margin-top:5px;white-space:normal">'+val(f.note)+'</div></td><td>'+val(f.m)+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  document.getElementById('fmOut').innerHTML=h;
+}
+document.getElementById('fmSearch').addEventListener('input',fmRender);
+document.getElementById('fmSort').addEventListener('change',fmRender);
+onWeight(fmRender);
+
+/* ---------------- quiz ---------------- */
+var QZ=[
+ {q:"A 24-year-old arrives four hours after ingesting an unknown number of aspirin tablets. She is agitated, breathing at 34 per minute, temperature 38.4 °C, salicylate concentration markedly raised. The team wants to intubate her for agitation and to protect the airway. What is the best next step?",
+  o:["Rapid sequence intubation with lung-protective ventilator settings",
+     "Sedation with a benzodiazepine and continued observation",
+     "Sodium bicarbonate, potassium replacement, and urgent haemodialysis",
+     "Activated charcoal by nasogastric tube after intubation"],
+  c:2,
+  e:"Her tachypnoea is the compensation that is keeping salicylate out of her brain and heart. Intubation with conventional settings reduces minute ventilation, drops the pH, and can precipitate arrest within minutes. The treatment for severe salicylate toxicity is alkalinisation with aggressive potassium replacement and urgent haemodialysis. If intubation becomes unavoidable, give bicarbonate first, minimise the apnoeic period, and match or exceed her spontaneous minute ventilation."},
+ {q:"A 61-year-old has taken a large amount of amlodipine. He has received 2 litres of crystalloid, calcium gluconate, and noradrenaline at a substantial dose, and remains hypotensive with a heart rate of 78. What should be given next?",
+  o:["High-dose insulin with a dextrose infusion",
+     "Intravenous lipid emulsion",
+     "Amiodarone",
+     "A further 2 litres of crystalloid"],
+  c:0,
+  e:"High-dose insulin is recommended early in life-threatening calcium-channel-blocker poisoning: 1 unit/kg as a bolus, then 1 to 10 units/kg per hour, with dextrose and close glucose and potassium monitoring. It is inotropic independently of adrenergic receptors, which is why it works when catecholamines have not. Lipid emulsion is a last-resort therapy in this setting, not a step before insulin."},
+ {q:"An 18-year-old who took an amitriptyline overdose has a blood pressure of 84/50 and a QRS of 168 ms with a tall terminal R wave in aVR. Which is the correct treatment?",
+  o:["Procainamide","Sodium bicarbonate boluses, repeated until the QRS narrows","Amiodarone","Flumazenil"],
+  c:1,
+  e:"Sodium bicarbonate treats sodium-channel blockade through both the sodium load and the alkalaemia. Give 1–2 mEq/kg boluses repeated every few minutes until the QRS narrows, then an infusion, targeting a pH of 7.45–7.55. Procainamide is a class Ia agent and shares the poison's mechanism. Amiodarone is not the drug of choice; lidocaine is the reasonable alternative. Flumazenil is contraindicated here."},
+ {q:"A farm worker is brought in with pinpoint pupils, profuse salivation, bronchorrhoea, fasciculations, and a falling oxygen saturation after spraying pesticide. He needs intubation. Which neuromuscular blocking agent should be avoided?",
+  o:["Rocuronium","Vecuronium","Suxamethonium","Cisatracurium"],
+  c:2,
+  e:"Organophosphates inhibit plasma cholinesterase, the enzyme that metabolises suxamethonium, so paralysis may last for hours. Use a non-depolarising agent. Continue atropine doubled every five minutes until bronchorrhoea and bronchospasm clear, give an oxime early, and decontaminate the skin with staff wearing protective barriers."},
+ {q:"A patient is brought in unresponsive with a respiratory rate of 6 and pinpoint pupils. She has a history of benzodiazepine dependence, and empty diazepam and tramadol packets were found. What is the correct antidote decision?",
+  o:["Flumazenil first, then naloxone if no response",
+     "Naloxone, titrated to adequate ventilation; do not give flumazenil",
+     "Flumazenil and naloxone together",
+     "Neither — intubate and observe"],
+  c:1,
+  e:"Where combined opioid and benzodiazepine poisoning is suspected, naloxone is given first because its safety profile is far better. Flumazenil is hazardous in benzodiazepine-dependent patients and in anyone with a co-ingestion that lowers the seizure threshold — tramadol is exactly such an agent. Ventilation is the immediate priority; naloxone is titrated to adequate respiration and airway reflexes, not to full arousal."},
+ {q:"A 29-year-old after a stimulant binge is agitated and fighting against four-point restraints. Core temperature is 41.6 °C, and creatine kinase is markedly raised. What matters most in the next ten minutes?",
+  o:["Paracetamol and a cooling blanket",
+     "Haloperidol to control the agitation",
+     "Deep benzodiazepine sedation and immersion or evaporative cooling",
+     "Dantrolene"],
+  c:2,
+  e:"The muscle activity is the heat source, so sedation is a cooling intervention as well as a behavioural one. Prolonged restraint without sedation is harmful. Immersion and evaporative cooling are more effective than blankets, cold packs, or endovascular devices. Antipyretics do not work because the hypothalamic set point is normal. Antipsychotics lower the seizure threshold, prolong the QT, and impair heat dissipation. Paralyse under sedation if the temperature will not fall."},
+ {q:"During an interscalene block, a patient becomes confused, seizes, and then loses cardiac output with a wide-complex rhythm. Alongside high-quality CPR and airway control, what is the specific treatment?",
+  o:["20% lipid emulsion 1.5 mL/kg bolus, then 0.25 mL/kg per minute",
+     "Calcium chloride 1 g",
+     "High-dose adrenaline boluses",
+     "Immediate transfer for ECMO before any drug therapy"],
+  c:0,
+  e:"This is local anaesthetic systemic toxicity, the one indication where lipid emulsion is genuinely first-line: 1.5 mL/kg (up to 100 mL) over a minute, then 0.25 mL/kg per minute for up to 30 minutes, repeating the bolus for persistent collapse. Oxygenation and correction of acidaemia matter because both worsen bupivacaine binding. Smaller adrenaline doses are usually advised. ECMO is for refractory cases and does not replace lipid."}
+];
+(function(){
+  var box=document.getElementById('quiz'),h='';
+  QZ.forEach(function(item,i){
+    h+='<div class="q" data-i="'+i+'"><div class="stem"><strong>Case '+(i+1)+'.</strong> '+item.q+'</div>';
+    item.o.forEach(function(o,j){h+='<button type="button" class="opt" data-q="'+i+'" data-o="'+j+'">'+o+'</button>';});
+    h+='<div class="exp" id="exp'+i+'"></div></div>';
+  });
+  box.innerHTML=h;
+  var answered={},correct=0;
+  box.addEventListener('click',function(ev){
+    var b=ev.target.closest?ev.target.closest('button.opt'):null;
+    if(!b)return;
+    var qi=+b.getAttribute('data-q'),oi=+b.getAttribute('data-o');
+    if(answered[qi])return;
+    answered[qi]=true;
+    var item=QZ[qi];
+    var btns=box.querySelectorAll('button.opt[data-q="'+qi+'"]');
+    Array.prototype.forEach.call(btns,function(x){
+      var j=+x.getAttribute('data-o');
+      if(j===item.c)x.className='opt right';
+      else if(j===oi)x.className='opt wrong';
+      x.disabled=true;
+    });
+    if(oi===item.c)correct++;
+    var exp=document.getElementById('exp'+qi);
+    exp.className='exp show';
+    exp.innerHTML='<strong>'+(oi===item.c?'Correct.':'Not this one.')+'</strong> '+item.e;
+    var n=Object.keys(answered).length;
+    var sc=document.getElementById('quizScore');
+    sc.style.display='block';
+    sc.innerHTML='<strong>'+correct+' of '+n+'</strong> answered correctly'+(n===QZ.length?' — all seven cases complete.':'.');
+  });
+})();
+
+/* ---------------- scrollspy ---------------- */
+(function(){
+  var links=Array.prototype.slice.call(document.querySelectorAll('.rail a'));
+  if(!links.length||!('IntersectionObserver' in window))return;
+  var map={};
+  links.forEach(function(a){var id=a.getAttribute('href').slice(1);var el=document.getElementById(id);if(el)map[id]=a;});
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.removeAttribute('aria-current');});
+        if(map[e.target.id])map[e.target.id].setAttribute('aria-current','true');
+      }
+    });
+  },{rootMargin:"-20% 0px -70% 0px"});
+  Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id));});
+})();
+
+/* ---------------- init ---------------- */
+drawQrs(90);qrsRun();hietRun();fmRender();
+})();
+</script>
+
+<script>
+(function(){
+"use strict";
+/* Recommendations of Part 10 of the 2025 AHA Guidelines, paraphrased, with the
+   class of recommendation and level of evidence assigned in that document.
+   Where adult and paediatric recommendations differ only in level of evidence,
+   the adult grading is shown and the difference noted. */
+var R={
+ bb:["Beta-blockers",[
+  ["1","C-LD","High-dose insulin should be given for hypotension refractory to vasopressor therapy — note the beta-blocker indication is anchored to vasopressor failure, unlike the calcium-channel-blocker one"],
+  ["1","C-EO","Vasopressors should be given for hypotension"],
+  ["2a","C-LD","A glucagon bolus followed by an infusion is reasonable for symptomatic bradycardia or hypotension"],
+  ["2a","C-LD","Extracorporeal life support is reasonable in adults with cardiogenic shock refractory to drug therapy (C-EO in children)"],
+  ["2b","C-LD","Haemodialysis may be reasonable for atenolol, nadolol or sotalol poisoning (C-EO in children) — nadolol was added in 2025"],
+  ["2b","C-EO","The usefulness of lipid emulsion in refractory shock is uncertain — upgraded in 2025 from the previous position that it was not likely to be beneficial"],
+  ["2b","C-EO","Calcium may be reasonable — a new recommendation in 2025"]]],
+ ccb:["Calcium channel blockers",[
+  ["1","B-NR","High-dose insulin should be given for hypotension — no requirement for vasopressor failure first"],
+  ["1","C-LD","Vasopressors should be given for hypotension"],
+  ["2a","B-NR","Extracorporeal life support is reasonable in adults where poisoning is refractory to drug therapy (C-LD in children)"],
+  ["2a","C-EO","Calcium administration is reasonable"],
+  ["2b","C-EO","The usefulness of a glucagon bolus and infusion is uncertain"],
+  ["2b","C-EO","The usefulness of methylene blue in refractory vasodilatory shock is uncertain"],
+  ["2b","C-EO","The usefulness of lipid emulsion in refractory shock is uncertain — upgraded in 2025 from not recommended"]]],
+ na:["Sodium-channel blockers",[
+  ["1","B-NR","Sodium bicarbonate should be used for life-threatening cardiotoxicity from tricyclic and tetracyclic antidepressants (2a, C-LD in children)"],
+  ["2a","C-LD","Hyperventilation in combination with sodium bicarbonate is reasonable in the mechanically ventilated patient — new in 2025"],
+  ["2a","C-EO","Extracorporeal life support is reasonable for refractory cardiogenic shock"],
+  ["2b","C-EO","A class Ib antiarrhythmic such as lidocaine may be reasonable for cardiotoxicity from class Ia or Ic agents"],
+  ["2b","C-EO","Lipid emulsion may be reasonable for life-threatening poisoning refractory to other treatment"]]],
+ coc:["Cocaine",[
+  ["1","B-R","Sedation is recommended for severe agitation (C-EO in children)"],
+  ["1","C-LD","Rapid external cooling with ice water immersion is recommended for core temperature above 40 °C (C-EO in children)"],
+  ["2a","C-LD","Sodium bicarbonate is reasonable for wide-complex tachycardia or cardiac arrest (C-EO in children)"],
+  ["2a","C-LD","Lidocaine is reasonable for wide-complex tachycardia or cardiac arrest (C-EO in children)"],
+  ["2a","C-LD","Vasodilators — nitrates, phentolamine, calcium channel blockers — are reasonable for coronary vasospasm or hypertensive emergency (C-EO in children)"],
+  ["2a","C-EO","Extracorporeal life support is reasonable for refractory cardiogenic shock"],
+  ["3n","C-LD","Beta-adrenergic antagonists are not recommended for cocaine-induced vasospasm or hypertensive emergency — new and explicit in 2025 (C-EO in children, worded as should not be performed)"],
+  ["3h","C-LD","Prolonged physical restraint without sedation is potentially harmful (C-EO in children)"]]],
+ dig:["Digoxin and cardiac glycosides",[
+  ["1","B-NR","Digoxin-specific antibody fragments should be given for life-threatening digoxin or digitoxin poisoning"],
+  ["2a","C-LD","Antibody fragments are reasonable for life-threatening Bufo toad and yellow oleander poisoning"],
+  ["3n","—","Note what is absent. The 2025 section contains only these two recommendations. The previous entries for atropine, electrical pacing, lidocaine, phenytoin, bretylium and extracorporeal removal were all withdrawn — bradycardia management is standard advanced life support, and digoxin is not dialysable."]]],
+ la:["Local anaesthetic systemic toxicity",[
+  ["1","C-LD","Lipid emulsion should be given"],
+  ["1","C-LD","Benzodiazepines should be used for associated seizures"],
+  ["2a","C-EO","Sodium bicarbonate is reasonable for life-threatening wide-complex tachycardia"],
+  ["2a","C-EO","Extracorporeal life support is reasonable for refractory cardiogenic shock"]]],
+ cy:["Cyanide",[
+  ["1","C-LD","Hydroxocobalamin should be given (C-EO in children)"],
+  ["1","C-LD","Sodium nitrite <em>and</em> sodium thiosulfate in combination should be given when hydroxocobalamin is unavailable — in 2025 this is a combination recommendation, not nitrite alone (C-EO in children)"],
+  ["2a","C-EO","Where carbon monoxide and cyanide poisoning coexist, as in a house fire, sodium thiosulfate alone is reasonable when hydroxocobalamin is unavailable — this is how you avoid adding methaemoglobin to carboxyhaemoglobin"],
+  ["2b","C-EO","Adding sodium thiosulfate to hydroxocobalamin may be reasonable — downgraded from the previous edition"]]],
+ met:["Methaemoglobinaemia",[
+  ["1","B-NR","Methylene blue should be given"],
+  ["2b","C-EO","Exchange transfusion may be reasonable where methylene blue fails"],
+  ["2b","C-EO","Hyperbaric oxygen may be reasonable where methylene blue fails"],
+  ["2b","C-EO","Ascorbic acid may be reasonable <em>only</em> when methylene blue is contraindicated or unavailable — upgraded in 2025 from not recommended, and the qualifier is the whole point"],
+  ["3n","B-R","N-acetylcysteine is not recommended"]]],
+ opi:["Opioids",[
+  ["1","B-NR","For a trained rescuer, breaths or bag-mask ventilation should be given to a person with respiratory depression or arrest and a definite pulse"],
+  ["1","B-NR","For a lay rescuer, CPR with breaths should be given to a person who is unresponsive and not breathing normally"],
+  ["1","B-NR","An opioid antagonist should be given for respiratory arrest with a definite pulse"],
+  ["1","C-EO","Do not delay standard resuscitation or activation of the emergency response system while giving an antagonist or awaiting its effect"],
+  ["2b","B-NR","An opioid antagonist may be reasonable in cardiac arrest with suspected opioid overdose, provided it does not interfere with high-quality compression-ventilation CPR (C-EO in children)"],
+  ["1","C-EO","Observe in a healthcare setting after response until the risk of recurrent respiratory depression is low and consciousness and vital signs have normalised"],
+  ["2a","C-LD","Repeated doses of an antagonist can be beneficial if respiratory depression recurs"]]],
+ op:["Organophosphates and carbamates",[
+  ["1","A","Atropine should be given immediately — one of only two Level A recommendations in the whole of Part 10"],
+  ["1","C-LD","Early endotracheal intubation is recommended in adults (C-EO in children)"],
+  ["1","C-EO","Benzodiazepines should be given for seizures and agitation"],
+  ["1","C-EO","Appropriate personal protective equipment is recommended for staff"],
+  ["1","C-EO","Dermal decontamination is recommended after external exposure"],
+  ["2a","A","Pralidoxime is reasonable in adults — the second Level A recommendation (B-R in children)"],
+  ["3n","C-LD","Neuromuscular blockers metabolised by cholinesterase — suxamethonium, mivacurium — are not recommended"]]],
+ benzo:["Benzodiazepines",[
+  ["2a","B-NR","If combined opioid and benzodiazepine poisoning is suspected, give naloxone first, before other antidotes (C-EO in children)"],
+  ["2a","C-LD","Flumazenil can be effective in selected adults with respiratory depression or arrest from pure benzodiazepine poisoning and no contraindications"],
+  ["3n","C-EO","Flumazenil has no role in cardiac arrest related to benzodiazepine poisoning"],
+  ["3h","B-R","Flumazenil is associated with harm where there is increased risk of seizures or arrhythmias (C-LD in children)"]]],
+ symp:["Sympathomimetics",[
+  ["1","B-NR","Sedation is recommended for severe agitation (C-EO in children)"],
+  ["1","C-LD","Rapid external cooling with ice water immersion is recommended for core temperature above 40 °C (C-EO in children)"],
+  ["2a","C-EO","Vasodilators are reasonable for coronary vasospasm"],
+  ["2a","C-EO","Extracorporeal life support is reasonable for refractory cardiogenic shock"],
+  ["2b","C-LD","The usefulness of dantrolene for hyperthermia from MDMA toxicity is uncertain (C-EO in children)"],
+  ["3h","C-LD","Prolonged physical restraint without sedation is potentially harmful (C-EO in children)"]]],
+ vol:["Volatile hydrocarbons",[
+  ["2b","C-EO","Beta-adrenergic antagonists may be reasonable for ventricular arrhythmias refractory to standard therapy — the only recommendation in this new 2025 section"]]],
+ hyper:["Hyperthermia (any cause)",[
+  ["1","C-EO","Active cooling should begin concurrently with standard resuscitation"],
+  ["2a","B-R","Immersion in ice water at 1–5 °C is preferred over other cooling methods"],
+  ["2a","B-R","If ice water immersion is unavailable, tepid water immersion at 8–17 °C or tarp-assisted ice water cooling is preferred over other methods"],
+  ["2a","C-LD","Cool as rapidly as possible, at a rate of at least 0.15 °C per minute"],
+  ["2a","C-LD","Stop active cooling when core temperature reaches 38.6 °C"],
+  ["3n","B-R","Dantrolene is not useful for hyperthermia from causes other than malignant hyperthermia"]]],
+ ecmo:["Venoarterial ECMO in poisoning",[
+  ["2a","B-NR","Reasonable for persistent cardiogenic shock or cardiac arrest from poisoning refractory to pharmacological treatment"],
+  ["2a","C-EO","Reasonable for persistent arrhythmias from poisoning when other treatments fail"],
+  ["2b","C-LD","Effectiveness for cardiovascular collapse from causes other than cardiogenic shock or arrhythmia is not established"]]]
+};
+var LBL={"1":"Class 1","2a":"Class 2a","2b":"Class 2b","3n":"No benefit","3h":"Harm"};
+var CLS={"1":"c1","2a":"c2a","2b":"c2b","3n":"c3n","3h":"c3h"};
+var sel=document.getElementById('recSel');
+if(sel){sel.addEventListener('change',function(){
+  var d=R[this.value],out=document.getElementById('recOut');
+  if(!d){out.className='out empty';out.textContent='Select a poisoning to see the recommendations and how strongly each is made.';return;}
+  var h='<div class="big" style="font-size:20px;margin-bottom:8px">'+d[0]+'</div>';
+  d[1].forEach(function(r){
+    h+='<div class="rec"><div class="rb"><span class="cor '+CLS[r[0]]+'">'+LBL[r[0]]+'</span></div>'+
+       '<div class="rt">'+r[2]+(r[1]!=='—'?'<div class="loe">Level of evidence '+r[1]+'</div>':'')+'</div></div>';
+  });
+  h+='<p class="mini" style="margin:12px 0 0">Classes and levels as assigned in Part 10 of the 2025 guidelines. Where adult and paediatric gradings differ, the adult grading is shown and the difference noted. These recommendations are additional to standard basic and advanced life support, not a replacement for it.</p>';
+  out.className='out';out.innerHTML=h;
+});}
+})();
+</script>
+</body>
+</html>
